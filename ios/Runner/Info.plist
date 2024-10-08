@@ -45,9 +45,5 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
-	<key>NSCameraUsageDescription</key>
-	<string>Needed to scan images from a photo album.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Automatically needed to use the camera to scan photos from a photo album.</string>
 </dict>
 </plist>
