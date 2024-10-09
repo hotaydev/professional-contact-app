@@ -27,9 +27,8 @@ class _SettingsViewState extends State<SettingsView> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController urlController = TextEditingController();
   final TextEditingController noteController = TextEditingController();
-  final TextEditingController cellPhoneController = TextEditingController();
+  final TextEditingController personalPhoneController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController workEmailController = TextEditingController();
 
   @override
   void initState() {
@@ -48,9 +47,8 @@ class _SettingsViewState extends State<SettingsView> {
           buildTextField('Last Name', lastNameController),
           buildTextField('Organization', organizationController),
           buildTextField('Title / Role', titleController),
-          buildTextField('Cell Phone', cellPhoneController),
+          buildTextField('Phone Number', personalPhoneController),
           buildTextField('Email', emailController),
-          buildTextField('Work Email', workEmailController),
           buildTextField('URL', urlController),
           buildTextField('Notes', noteController),
           SizedBox(height: 20),
@@ -66,13 +64,13 @@ class _SettingsViewState extends State<SettingsView> {
   Widget buildTextField(String labelText, TextEditingController controller) {
     switch (labelText) {
       case 'First Name':
-        controller.text = vCard.firstName;
+        controller.text = vCard.firstName ?? "";
         break;
       case 'Middle Name':
-        controller.text = vCard.middleName;
+        controller.text = vCard.middleName ?? "";
         break;
       case 'Last Name':
-        controller.text = vCard.lastName;
+        controller.text = vCard.lastName ?? "";
         break;
       case 'Organization':
         controller.text = vCard.organization ?? "";
@@ -80,14 +78,11 @@ class _SettingsViewState extends State<SettingsView> {
       case 'Title / Role':
         controller.text = vCard.jobTitle ?? "";
         break;
-      case 'Cell Phone':
-        controller.text = vCard.cellPhone ?? "";
+      case 'Personal Phone':
+        controller.text = vCard.cellPhone?.replaceAll("tel:", "") ?? "";
         break;
       case 'Email':
         controller.text = vCard.email ?? "";
-        break;
-      case 'Work Email':
-        controller.text = vCard.workEmail ?? "";
         break;
       case 'URL':
         controller.text = vCard.url ?? "";
@@ -118,13 +113,9 @@ class _SettingsViewState extends State<SettingsView> {
     vCard.organization = organizationController.text;
     vCard.url = urlController.text;
     vCard.note = noteController.text;
-    vCard.cellPhone = cellPhoneController.text;
+    vCard.cellPhone = personalPhoneController.text;
     vCard.email = emailController.text;
-    vCard.workEmail = workEmailController.text;
     vCard.jobTitle = titleController.text;
-
-    // TODO: Add address information
-
     vCard.version = '4.0';
 
     // After setting the values, get the formatted string
@@ -152,9 +143,8 @@ class _SettingsViewState extends State<SettingsView> {
     titleController.dispose();
     urlController.dispose();
     noteController.dispose();
-    cellPhoneController.dispose();
+    personalPhoneController.dispose();
     emailController.dispose();
-    workEmailController.dispose();
     super.dispose();
   }
 }
