@@ -25,8 +25,8 @@ class VCardParser {
         vCard.middleName = decode(nameParts.length > 2 ? nameParts[2] : '');
       } else if (line.startsWith('EMAIL;type=HOME:')) {
         vCard.email = decode(line.substring(16));
-      } else if (line.startsWith('TEL;VALUE=uri;TYPE="voice,cell":tel:')) {
-        vCard.cellPhone = decode(line.substring(34));
+      } else if (line.startsWith('TEL;TYPE="voice,cell":')) {
+        vCard.cellPhone = decode(line.substring(22));
       } else if (line.startsWith('TITLE:')) {
         vCard.jobTitle = decode(line.substring(6));
       } else if (line.startsWith('ORG:')) {

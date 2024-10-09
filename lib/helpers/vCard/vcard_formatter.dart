@@ -31,28 +31,28 @@ class VCardFormatter {
     formattedVCardString +=
         'N:${e(vCard.lastName)};${e(vCard.firstName)};${e(vCard.middleName)};;${nl()}';
 
-    if (vCard.email != null) {
+    if ((vCard.email ?? "").isNotEmpty) {
       formattedVCardString += 'EMAIL;type=HOME:${e(vCard.email)}${nl()}';
     }
 
-    if (vCard.cellPhone != null) {
+    if ((vCard.cellPhone ?? "").isNotEmpty) {
       formattedVCardString +=
-          'TEL;VALUE=uri;TYPE="voice,cell":tel:${e(vCard.cellPhone)}${nl()}';
+          'TEL;TYPE="voice,cell":${e(vCard.cellPhone)}${nl()}';
     }
 
-    if (vCard.jobTitle != null) {
+    if ((vCard.jobTitle ?? "").isNotEmpty) {
       formattedVCardString += 'TITLE:${e(vCard.jobTitle ?? '')}${nl()}';
     }
 
-    if (vCard.organization != null) {
+    if ((vCard.organization ?? "").isNotEmpty) {
       formattedVCardString += 'ORG:${e(vCard.organization ?? '')}${nl()}';
     }
 
-    if (vCard.url != null) {
+    if ((vCard.url ?? "").isNotEmpty) {
       formattedVCardString += 'URL:${e(vCard.url ?? '')}${nl()}';
     }
 
-    if (vCard.note != null) {
+    if ((vCard.note ?? "").isNotEmpty) {
       formattedVCardString += 'NOTE:${e(vCard.note ?? '')}${nl()}';
     }
 

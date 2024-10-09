@@ -79,7 +79,7 @@ class _SettingsViewState extends State<SettingsView> {
         controller.text = vCard.jobTitle ?? "";
         break;
       case 'Personal Phone':
-        controller.text = vCard.cellPhone?.replaceAll("tel:", "") ?? "";
+        controller.text = vCard.cellPhone ?? "";
         break;
       case 'Email':
         controller.text = vCard.email ?? "";
