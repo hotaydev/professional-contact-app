@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:professional_contact/Widgets/Common/navigation_bar.dart';
 import 'package:professional_contact/Widgets/DataTransfer/choose.dart';
 
 class HomeView extends StatelessWidget {
@@ -14,7 +13,6 @@ class HomeView extends StatelessWidget {
             Spacer(),
             ChooseDataTransfer(),
             Spacer(),
-            NavBar(onMainView: true),
           ],
         ),
       ),

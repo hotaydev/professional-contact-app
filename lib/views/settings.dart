@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:professional_contact/Widgets/Common/navigation_bar.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
@@ -11,7 +10,6 @@ class SettingsView extends StatelessWidget {
         child: Column(
           children: [
             Spacer(),
-            NavBar(onMainView: false),
           ],
         ),
       ),

@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
+import 'package:professional_contact/Widgets/layout.dart';
 import 'package:professional_contact/helpers/storage.dart';
 import 'package:professional_contact/helpers/theme.dart';
-import 'package:professional_contact/views/home.dart';
 import 'package:provider/provider.dart';
 
 late Isar isar;
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      home: HomeView(),
+      home: PageLayout(),
     );
   }
 }
