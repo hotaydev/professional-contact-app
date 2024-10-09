@@ -4,7 +4,11 @@ import 'package:professional_contact/helpers/theme.dart';
 import 'package:provider/provider.dart';
 
 class QrCodeDataTransfer extends StatelessWidget {
-  const QrCodeDataTransfer({super.key});
+  final String vCard;
+  const QrCodeDataTransfer({
+    super.key,
+    required this.vCard,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +26,7 @@ class QrCodeDataTransfer extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: PrettyQrView.data(
-            data: 'lorem ipsum dolor sit amet',
+            data: vCard,
             decoration: const PrettyQrDecoration(
               shape: PrettyQrSmoothSymbol(
                 roundFactor: 0,

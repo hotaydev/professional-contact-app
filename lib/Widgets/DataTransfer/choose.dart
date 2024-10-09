@@ -3,7 +3,11 @@ import 'package:professional_contact/Widgets/DataTransfer/nfc.dart';
 import 'package:professional_contact/Widgets/DataTransfer/qr_code.dart';
 
 class ChooseDataTransfer extends StatefulWidget {
-  const ChooseDataTransfer({super.key});
+  final String vCard;
+  const ChooseDataTransfer({
+    super.key,
+    required this.vCard,
+  });
 
   @override
   State<ChooseDataTransfer> createState() => _ChooseDataTransferState();
@@ -23,7 +27,9 @@ class _ChooseDataTransferState extends State<ChooseDataTransfer> {
     return Column(
       children: [
         Center(
-          child: usingNfcAsDefault ? NfcDataTransfer() : QrCodeDataTransfer(),
+          child: usingNfcAsDefault
+              ? NfcDataTransfer(vCard: widget.vCard)
+              : QrCodeDataTransfer(vCard: widget.vCard),
         ),
         SizedBox(height: 50),
         TextButton(

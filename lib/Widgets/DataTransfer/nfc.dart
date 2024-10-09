@@ -3,7 +3,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class NfcDataTransfer extends StatefulWidget {
-  const NfcDataTransfer({super.key});
+  final String vCard;
+  const NfcDataTransfer({
+    super.key,
+    required this.vCard,
+  });
 
   @override
   State<NfcDataTransfer> createState() => _NfcDataTransferState();
