@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:nfc_manager/nfc_manager.dart';
 
 class NfcDataTransfer extends StatefulWidget {
   final String vCard;
@@ -24,6 +25,35 @@ class _NfcDataTransferState extends State<NfcDataTransfer>
       vsync: this,
       duration: const Duration(seconds: 2),
     )..repeat();
+  }
+
+  void transferContactWithNfc() async {
+    NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
+      try {
+        NdefMessage message =
+            NdefMessage([NdefRecord.createText(widget.vCard)]);
+        await Ndef.from(tag)?.write(message);
+        NfcManager.instance.stopSession();
+      } catch (e) {
+        debugPrint('Error emitting NFC data: $e');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.red.shade700,
+            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            content: Text(
+              "Error transferring data via NFC!",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        );
+      }
+    });
   }
 
   @override

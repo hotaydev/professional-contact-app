@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:professional_contact/Widgets/DataTransfer/choose.dart';
+import 'package:professional_contact/widgets/DataTransfer/choose.dart';
 
 class HomeView extends StatelessWidget {
   final String vCard;

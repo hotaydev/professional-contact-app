@@ -162,7 +162,22 @@ class _SettingsViewState extends State<SettingsView> {
     });
 
     widget.goToMainView();
-    // TODO: Show success toast
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.green.shade600,
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        content: Text(
+          "Information Saved!",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
   }
 
   @override
