@@ -36,12 +36,23 @@ class _ChooseDataTransferState extends State<ChooseDataTransfer> {
           onPressed: () {
             _toggleTransferType();
           },
+          style: TextButton.styleFrom(
+            backgroundColor: Colors.transparent,
+            shadowColor: Colors.transparent,
+            overlayColor: Colors.transparent,
+          ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(usingNfcAsDefault ? "Use QR Code" : "Use NFC"),
+              Text(
+                usingNfcAsDefault ? "Use QR Code" : "Use NFC",
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: Colors.blue.shade700,
+                    ),
+              ),
               SizedBox(width: 10),
-              Icon(Icons.sync),
+              Icon(Icons.sync, color: Colors.blue.shade700),
             ],
           ),
         ),

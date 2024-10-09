@@ -10,9 +10,14 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Column(
       children: [
-        Spacer(),
+        SizedBox(height: screenHeight * 0.05),
+        Text("Professional Contact",
+            style: Theme.of(context).textTheme.headlineSmall),
+        SizedBox(height: screenHeight * 0.05),
         ChooseDataTransfer(vCard: vCard),
         Spacer(),
       ],

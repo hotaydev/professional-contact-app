@@ -42,6 +42,18 @@ class _SettingsViewState extends State<SettingsView> {
       padding: EdgeInsets.all(20),
       child: Column(
         children: [
+          Text(
+            "Fill your information",
+            style: Theme.of(context).textTheme.headlineMedium,
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 5),
+          Text(
+            "This information will be used to generate your professional contact card",
+            style: Theme.of(context).textTheme.bodyMedium,
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 40),
           buildTextField('First Name', firstNameController),
           buildTextField('Middle Name', middleNameController),
           buildTextField('Last Name', lastNameController),
@@ -54,8 +66,28 @@ class _SettingsViewState extends State<SettingsView> {
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: saveVCard,
-            child: Text('Save Contact Information'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue,
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(16), // Smaller border radius
+              ),
+              padding: EdgeInsets.symmetric(
+                horizontal: 40,
+                vertical: 18,
+              ), // Adjust padding for a rectangular shape
+              elevation: 5, // Optional: add shadow for 3D effect
+            ),
+            child: Text(
+              "Save",
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
+          SizedBox(height: 20),
         ],
       ),
     );
@@ -78,7 +110,7 @@ class _SettingsViewState extends State<SettingsView> {
       case 'Title / Role':
         controller.text = vCard.jobTitle ?? "";
         break;
-      case 'Personal Phone':
+      case 'Phone Number':
         controller.text = vCard.cellPhone ?? "";
         break;
       case 'Email':
