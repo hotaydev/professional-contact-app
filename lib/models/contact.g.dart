@@ -17,9 +17,9 @@ const ContactSchema = CollectionSchema(
   name: r'Contact',
   id: 342568039478732666,
   properties: {
-    r'name': PropertySchema(
+    r'vCard': PropertySchema(
       id: 0,
-      name: r'name',
+      name: r'vCard',
       type: IsarType.string,
     )
   },
@@ -43,12 +43,7 @@ int _contactEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  {
-    final value = object.name;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
+  bytesCount += 3 + object.vCard.length * 3;
   return bytesCount;
 }
 
@@ -58,7 +53,7 @@ void _contactSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.name);
+  writer.writeString(offsets[0], object.vCard);
 }
 
 Contact _contactDeserialize(
@@ -69,7 +64,7 @@ Contact _contactDeserialize(
 ) {
   final object = Contact();
   object.id = id;
-  object.name = reader.readStringOrNull(offsets[0]);
+  object.vCard = reader.readString(offsets[0]);
   return object;
 }
 
@@ -81,7 +76,7 @@ P _contactDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -228,75 +223,59 @@ extension ContactQueryFilter
     });
   }
 
-  QueryBuilder<Contact, Contact, QAfterFilterCondition> nameIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'name',
-      ));
-    });
-  }
-
-  QueryBuilder<Contact, Contact, QAfterFilterCondition> nameIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'name',
-      ));
-    });
-  }
-
-  QueryBuilder<Contact, Contact, QAfterFilterCondition> nameEqualTo(
-    String? value, {
+  QueryBuilder<Contact, Contact, QAfterFilterCondition> vCardEqualTo(
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'name',
+        property: r'vCard',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Contact, Contact, QAfterFilterCondition> nameGreaterThan(
-    String? value, {
+  QueryBuilder<Contact, Contact, QAfterFilterCondition> vCardGreaterThan(
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'name',
+        property: r'vCard',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Contact, Contact, QAfterFilterCondition> nameLessThan(
-    String? value, {
+  QueryBuilder<Contact, Contact, QAfterFilterCondition> vCardLessThan(
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'name',
+        property: r'vCard',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Contact, Contact, QAfterFilterCondition> nameBetween(
-    String? lower,
-    String? upper, {
+  QueryBuilder<Contact, Contact, QAfterFilterCondition> vCardBetween(
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'name',
+        property: r'vCard',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -306,69 +285,69 @@ extension ContactQueryFilter
     });
   }
 
-  QueryBuilder<Contact, Contact, QAfterFilterCondition> nameStartsWith(
+  QueryBuilder<Contact, Contact, QAfterFilterCondition> vCardStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'name',
+        property: r'vCard',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Contact, Contact, QAfterFilterCondition> nameEndsWith(
+  QueryBuilder<Contact, Contact, QAfterFilterCondition> vCardEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'name',
+        property: r'vCard',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Contact, Contact, QAfterFilterCondition> nameContains(
+  QueryBuilder<Contact, Contact, QAfterFilterCondition> vCardContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: r'name',
+        property: r'vCard',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Contact, Contact, QAfterFilterCondition> nameMatches(
+  QueryBuilder<Contact, Contact, QAfterFilterCondition> vCardMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: r'name',
+        property: r'vCard',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Contact, Contact, QAfterFilterCondition> nameIsEmpty() {
+  QueryBuilder<Contact, Contact, QAfterFilterCondition> vCardIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'name',
+        property: r'vCard',
         value: '',
       ));
     });
   }
 
-  QueryBuilder<Contact, Contact, QAfterFilterCondition> nameIsNotEmpty() {
+  QueryBuilder<Contact, Contact, QAfterFilterCondition> vCardIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'name',
+        property: r'vCard',
         value: '',
       ));
     });
@@ -382,15 +361,15 @@ extension ContactQueryLinks
     on QueryBuilder<Contact, Contact, QFilterCondition> {}
 
 extension ContactQuerySortBy on QueryBuilder<Contact, Contact, QSortBy> {
-  QueryBuilder<Contact, Contact, QAfterSortBy> sortByName() {
+  QueryBuilder<Contact, Contact, QAfterSortBy> sortByVCard() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'name', Sort.asc);
+      return query.addSortBy(r'vCard', Sort.asc);
     });
   }
 
-  QueryBuilder<Contact, Contact, QAfterSortBy> sortByNameDesc() {
+  QueryBuilder<Contact, Contact, QAfterSortBy> sortByVCardDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'name', Sort.desc);
+      return query.addSortBy(r'vCard', Sort.desc);
     });
   }
 }
@@ -409,25 +388,25 @@ extension ContactQuerySortThenBy
     });
   }
 
-  QueryBuilder<Contact, Contact, QAfterSortBy> thenByName() {
+  QueryBuilder<Contact, Contact, QAfterSortBy> thenByVCard() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'name', Sort.asc);
+      return query.addSortBy(r'vCard', Sort.asc);
     });
   }
 
-  QueryBuilder<Contact, Contact, QAfterSortBy> thenByNameDesc() {
+  QueryBuilder<Contact, Contact, QAfterSortBy> thenByVCardDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'name', Sort.desc);
+      return query.addSortBy(r'vCard', Sort.desc);
     });
   }
 }
 
 extension ContactQueryWhereDistinct
     on QueryBuilder<Contact, Contact, QDistinct> {
-  QueryBuilder<Contact, Contact, QDistinct> distinctByName(
+  QueryBuilder<Contact, Contact, QDistinct> distinctByVCard(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'vCard', caseSensitive: caseSensitive);
     });
   }
 }
@@ -440,9 +419,9 @@ extension ContactQueryProperty
     });
   }
 
-  QueryBuilder<Contact, String?, QQueryOperations> nameProperty() {
+  QueryBuilder<Contact, String, QQueryOperations> vCardProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'name');
+      return query.addPropertyName(r'vCard');
     });
   }
 }

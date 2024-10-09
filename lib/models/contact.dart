@@ -6,5 +6,5 @@ part 'contact.g.dart';
 class Contact {
   Id id = Isar.autoIncrement;
 
-  String? name;
+  String vCard = "";
 }

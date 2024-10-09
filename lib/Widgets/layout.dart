@@ -12,13 +12,20 @@ class PageLayout extends StatefulWidget {
 class _PageLayoutState extends State<PageLayout> {
   bool onMainView = true;
 
+  void goToMainView() {
+    setState(() {
+      onMainView = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       body: SafeArea(
-        child: onMainView ? HomeView() : SettingsView(),
+        child:
+            onMainView ? HomeView() : SettingsView(goToMainView: goToMainView),
       ),
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
