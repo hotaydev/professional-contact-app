@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 import 'package:professional_contact/helpers/storage.dart';
 import 'package:professional_contact/helpers/theme.dart';
-import 'package:professional_contact/views/initial.dart';
+import 'package:professional_contact/views/home.dart';
 import 'package:provider/provider.dart';
 
 late Isar isar;
@@ -42,7 +42,10 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      home: InitialView(),
+      home: HomeView(),
     );
   }
 }
+
+// https://www.codetrade.io/blog/how-to-implement-nfc-in-flutter-a-beginners-guide/
+// https://pub.dev/packages/pretty_qr_code
