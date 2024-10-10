@@ -13,4 +13,7 @@ upgrade:
 get:
 	flutter pub get
 
+icons:
+	dart run flutter_launcher_icons
+
 .PHONY: build
