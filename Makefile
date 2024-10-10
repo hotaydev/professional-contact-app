@@ -1,5 +1,8 @@
-build:
+apk:
 	flutter build apk --release
+
+appbundle:
+	flutter build appbundle --release
 
 isar:
 	dart run build_runner build

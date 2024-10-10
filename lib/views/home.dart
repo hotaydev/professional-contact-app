@@ -15,8 +15,10 @@ class HomeView extends StatelessWidget {
     return Column(
       children: [
         SizedBox(height: screenHeight * 0.05),
-        Text("Professional Contact",
-            style: Theme.of(context).textTheme.headlineSmall),
+        Text(
+          "Professional Contact",
+          style: Theme.of(context).textTheme.headlineSmall,
+        ),
         SizedBox(height: screenHeight * 0.05),
         ChooseDataTransfer(vCard: vCard),
         Spacer(),
