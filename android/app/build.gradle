@@ -1,8 +1,8 @@
 plugins {
-    id "com.android.application"
-    id "kotlin-android"
+    id 'com.android.application'
+    id 'kotlin-android'
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
-    id "dev.flutter.flutter-gradle-plugin"
+    id 'dev.flutter.flutter-gradle-plugin'
 }
 
 def keystoreProperties = new Properties()
@@ -12,9 +12,9 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "dev.hotay.professional_contact"
-    compileSdk = 33
-    ndkVersion = flutter.ndkVersion
+    namespace = 'dev.hotay.professional_contact'
+    compileSdk = 34
+    ndkVersion = '26.1.10909125'
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -26,9 +26,9 @@ android {
     }
 
     defaultConfig {
-        applicationId = "dev.hotay.professional_contact"
+        applicationId = 'dev.hotay.professional_contact'
         minSdk = 21
-        targetSdk = 33
+        targetSdk = 34
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
@@ -52,5 +52,5 @@ android {
 }
 
 flutter {
-    source = "../.."
+    source = '../..'
 }
