@@ -57,7 +57,7 @@ class _PageLayoutState extends State<PageLayout> {
                           Spacer(),
                           Center(
                             child: Text(
-                              "To get started, add your information in the \"settings\" tab.",
+                              "To get started, add your information\nin the \"settings\" tab.",
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -91,7 +91,7 @@ class _PageLayoutState extends State<PageLayout> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               IconButton(
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.all(16),
                 onPressed: () {
                   if (!onMainView) {
                     setState(() {
@@ -103,11 +103,11 @@ class _PageLayoutState extends State<PageLayout> {
                   Icons.qr_code,
                   color:
                       onMainView ? Colors.blue.shade600 : Colors.grey.shade500,
-                  size: 48,
+                  size: 40,
                 ),
               ),
               IconButton(
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.all(16),
                 onPressed: () {
                   if (onMainView) {
                     setState(() {
@@ -119,12 +119,12 @@ class _PageLayoutState extends State<PageLayout> {
                   Icons.settings,
                   color:
                       onMainView ? Colors.grey.shade500 : Colors.blue.shade600,
-                  size: 48,
+                  size: 40,
                 ),
               ),
             ],
           ),
-          SizedBox(height: screenHeight * 0.04),
+          SizedBox(height: screenHeight * 0.02),
         ],
       ),
     );

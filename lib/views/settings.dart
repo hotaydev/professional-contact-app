@@ -54,7 +54,7 @@ class _SettingsViewState extends State<SettingsView> {
           ),
           SizedBox(height: 5),
           Text(
-            "This information will be used to generate your professional contact card",
+            "This information will be used to generate your professional contact card. All fields are optional.",
             style: Theme.of(context).textTheme.bodyMedium,
             textAlign: TextAlign.center,
           ),
@@ -169,8 +169,10 @@ class _SettingsViewState extends State<SettingsView> {
     widget.goToMainView();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        behavior: SnackBarBehavior.floating,
         backgroundColor: Colors.green.shade600,
-        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),

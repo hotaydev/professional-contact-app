@@ -38,8 +38,10 @@ class _NfcDataTransferState extends State<NfcDataTransfer>
         debugPrint('Error emitting NFC data: $e');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
+            behavior: SnackBarBehavior.floating,
             backgroundColor: Colors.red.shade700,
-            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
