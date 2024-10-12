@@ -36,30 +36,35 @@ class _NfcDataTransferState extends State<NfcDataTransfer>
         NfcManager.instance.stopSession();
       } catch (e) {
         debugPrint('Error emitting NFC data: $e');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: Colors.red.shade700,
-            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            content: Text(
-              "Error transferring data via NFC!",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: Colors.red.shade700,
+              margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              content: Text(
+                "Error transferring data via NFC!",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
               ),
             ),
-          ),
-        );
+          );
+        }
       }
     });
   }
 
   @override
   void dispose() {
+    NfcManager.instance.stopSession();
     _controller.dispose();
     super.dispose();
   }

@@ -82,6 +82,18 @@ class _ChooseDataTransferState extends State<ChooseDataTransfer> {
                     ],
                   ),
                 ),
+              if (!nfcIsAvailable)
+                Badge(
+                  label: Text(
+                    "NFC disabled or not supported",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  backgroundColor: Colors.red.shade500.withOpacity(0.4),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                ),
             ],
           )
         : Center(
