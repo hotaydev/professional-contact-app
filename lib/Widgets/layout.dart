@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 import 'package:professional_contact/models/contact.dart';
 import 'package:professional_contact/views/home.dart';
+import 'package:professional_contact/views/profile.dart';
 import 'package:professional_contact/views/settings.dart';
 
 import '../main.dart';
+
+enum CurrentView { home, settings, profile }
 
 class PageLayout extends StatefulWidget {
   const PageLayout({super.key});
@@ -15,7 +18,7 @@ class PageLayout extends StatefulWidget {
 
 class _PageLayoutState extends State<PageLayout> {
   bool hasBeenInitialized = false;
-  bool onMainView = true;
+  CurrentView currentView = CurrentView.home;
   late Stream<List<Contact>> _stream;
 
   @override
@@ -32,10 +35,12 @@ class _PageLayoutState extends State<PageLayout> {
     });
   }
 
-  void goToMainView() {
-    setState(() {
-      onMainView = true;
-    });
+  void goToView(CurrentView view) {
+    if (currentView != view) {
+      setState(() {
+        currentView = view;
+      });
+    }
   }
 
   @override
@@ -51,35 +56,41 @@ class _PageLayoutState extends State<PageLayout> {
                   if (!snapshot.hasData ||
                       ((snapshot.data?.length ?? 0) == 0) ||
                       !(snapshot.data![0].vCard.isNotEmpty)) {
-                    if (onMainView) {
-                      return Column(
-                        children: [
-                          Spacer(),
-                          Center(
-                            child: Text(
-                              "To get started, add your information\nin the \"settings\" tab.",
-                              textAlign: TextAlign.center,
+                    return switch (currentView) {
+                      CurrentView.home => Column(
+                          children: [
+                            Spacer(),
+                            Center(
+                              child: Text(
+                                "To get started, add your information\nin the \"profile\" tab.",
+                                textAlign: TextAlign.center,
+                              ),
                             ),
-                          ),
-                          Spacer(),
-                        ],
-                      );
-                    } else {
-                      return SettingsView(
-                        goToMainView: goToMainView,
-                        vCard: "",
-                      );
-                    }
+                            Spacer(),
+                          ],
+                        ),
+                      CurrentView.settings => SettingsView(
+                          vCard: snapshot.data![0].vCard,
+                        ),
+                      CurrentView.profile => ProfileView(
+                          goToView: goToView,
+                          vCard: snapshot.data![0].vCard,
+                        ),
+                    };
                   }
 
-                  return onMainView
-                      ? HomeView(
-                          vCard: snapshot.data![0].vCard,
-                        )
-                      : SettingsView(
-                          goToMainView: goToMainView,
-                          vCard: snapshot.data![0].vCard,
-                        );
+                  return switch (currentView) {
+                    CurrentView.home => HomeView(
+                        vCard: snapshot.data![0].vCard,
+                      ),
+                    CurrentView.settings => SettingsView(
+                        vCard: snapshot.data![0].vCard,
+                      ),
+                    CurrentView.profile => ProfileView(
+                        goToView: goToView,
+                        vCard: snapshot.data![0].vCard,
+                      ),
+                  };
                 },
               )
             : const CircularProgressIndicator(),
@@ -93,32 +104,39 @@ class _PageLayoutState extends State<PageLayout> {
               IconButton(
                 padding: EdgeInsets.all(16),
                 onPressed: () {
-                  if (!onMainView) {
-                    setState(() {
-                      onMainView = true;
-                    });
-                  }
+                  goToView(CurrentView.profile);
                 },
                 icon: Icon(
-                  Icons.qr_code,
-                  color:
-                      onMainView ? Colors.blue.shade600 : Colors.grey.shade500,
+                  Icons.person_outline,
+                  color: currentView == CurrentView.profile
+                      ? Colors.blue.shade600
+                      : Colors.grey.shade500,
                   size: 40,
                 ),
               ),
               IconButton(
                 padding: EdgeInsets.all(16),
                 onPressed: () {
-                  if (onMainView) {
-                    setState(() {
-                      onMainView = false;
-                    });
-                  }
+                  goToView(CurrentView.home);
+                },
+                icon: Icon(
+                  Icons.qr_code,
+                  color: currentView == CurrentView.home
+                      ? Colors.blue.shade600
+                      : Colors.grey.shade500,
+                  size: 40,
+                ),
+              ),
+              IconButton(
+                padding: EdgeInsets.all(16),
+                onPressed: () {
+                  goToView(CurrentView.settings);
                 },
                 icon: Icon(
                   Icons.settings,
-                  color:
-                      onMainView ? Colors.grey.shade500 : Colors.blue.shade600,
+                  color: currentView == CurrentView.settings
+                      ? Colors.blue.shade600
+                      : Colors.grey.shade500,
                   size: 40,
                 ),
               ),

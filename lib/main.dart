@@ -46,5 +46,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-// https://www.codetrade.io/blog/how-to-implement-nfc-in-flutter-a-beginners-guide/
