@@ -38,15 +38,15 @@ class _SettingsViewState extends State<SettingsView> {
         SizedBox(height: screenHeight * 0.05),
         Center(
           child: Text(
-            "Settings",
+            'settings.title'.tr(),
             style: Theme.of(context).textTheme.headlineSmall,
           ),
         ),
         SizedBox(height: screenHeight * 0.03),
 
         ListTile(
-          title: Text('Theme'),
-          subtitle: Text('Change between themes'),
+          title: Text('settings.theme.title'.tr()),
+          subtitle: Text('settings.theme.subtitle'.tr()),
           trailing: DropdownButton<String>(
             value:
                 Provider.of<ThemeHelper>(context, listen: false).getTheme() ==
@@ -56,11 +56,11 @@ class _SettingsViewState extends State<SettingsView> {
             items: [
               DropdownMenuItem(
                 value: 'Light',
-                child: Text('Light'),
+                child: Text('settings.theme.light'.tr()),
               ),
               DropdownMenuItem(
                 value: 'Dark',
-                child: Text('Dark'),
+                child: Text('settings.theme.dark'.tr()),
               ),
             ],
             onChanged: (value) async {
@@ -96,9 +96,8 @@ class _SettingsViewState extends State<SettingsView> {
         Divider(),
 
         SwitchListTile(
-          title: Text('Device with NFC'),
-          subtitle: Text(
-              "Disable this if your device doesn't have NFC to hide warning messages"),
+          title: Text('settings.nfc.title'.tr()),
+          subtitle: Text('settings.nfc.subtitle'.tr()),
           value: haveNfcAvailable,
           activeColor: Colors.blue.shade500,
           onChanged: (value) async {
@@ -118,8 +117,8 @@ class _SettingsViewState extends State<SettingsView> {
         Divider(),
 
         ListTile(
-          title: Text('Language'),
-          subtitle: Text('Select Language'),
+          title: Text('settings.language.title'.tr()),
+          subtitle: Text('settings.language.subtitle'.tr()),
           trailing: DropdownButton<String>(
             value: switch (context.locale.languageCode) {
               "en" => "English",
@@ -129,11 +128,11 @@ class _SettingsViewState extends State<SettingsView> {
             items: [
               DropdownMenuItem(
                 value: 'English',
-                child: Text('English'),
+                child: Text('settings.language.options.english'.tr()),
               ),
               DropdownMenuItem(
                 value: 'Portuguese',
-                child: Text('Portuguese'),
+                child: Text('settings.language.options.portuguese'.tr()),
               ),
             ],
             onChanged: (value) async {
@@ -154,7 +153,7 @@ class _SettingsViewState extends State<SettingsView> {
 
         ListTile(
           leading: Icon(Icons.article_outlined),
-          title: Text('See Licenses'),
+          title: Text('settings.licenses'.tr()),
           onTap: () {
             showLicensePage(context: context);
           },
@@ -163,7 +162,7 @@ class _SettingsViewState extends State<SettingsView> {
 
         ListTile(
           leading: Icon(Icons.code),
-          title: Text('View in GitHub'),
+          title: Text('settings.github'.tr()),
           onTap: () {
             UrlHelper()
                 .open("https://github.com/hotaydev/professional-contact-nfc");
@@ -174,7 +173,7 @@ class _SettingsViewState extends State<SettingsView> {
         // Add Play Store link
         // ListTile(
         //   leading: Icon(Icons.star_outline),
-        //   title: Text('Leave a Review'),
+        //   title: Text('settings.review'.tr()),
         //   onTap: () {
         //     UrlHelper().open("");
         //   },

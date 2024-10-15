@@ -1,1 +1,53 @@
-{}
+{
+  "title": "Professional Contact",
+  "getStarted": "To get started, add your information\nin the \"profile\" tab.",
+  "nfc": {
+    "errorTransmitting": "Error transferring data via NFC!",
+    "disabledOrNotSupported": "NFC disabled or not supported"
+  },
+  "transferTypes": {
+    "qrCode": "Use QR Code",
+    "nfc": "Use NFC"
+  },
+  "settings": {
+    "title": "Settings",
+    "theme": {
+      "title": "Theme",
+      "subtitle": "Change between themes",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "nfc": {
+      "title": "Device with NFC",
+      "subtitle": "Disable this if your device doesn't have NFC to hide warnings"
+    },
+    "language": {
+      "title": "Language",
+      "subtitle": "Change between languages",
+      "options": {
+        "portuguese": "Portuguese",
+        "english": "English"
+      }
+    },
+    "licenses": "Licenses",
+    "github": "View in GitHub",
+    "review": "Leave a Review"
+  },
+  "profile": {
+    "title": "Fill your information",
+    "subtitle": "This information will be used to generate your professional contact card. All fields are optional.",
+    "save": "Save",
+    "saved": "Information Saved!",
+    "opt": {
+      "firstName": "First Name",
+      "middleName": "Middle Name",
+      "lastName": "Last Name",
+      "org": "Organization",
+      "title": "Title / Role",
+      "phone": "Phone Number",
+      "email": "Email",
+      "url": "URL",
+      "notes": "Notes"
+    }
+  }
+}

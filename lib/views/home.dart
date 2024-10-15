@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:professional_contact/widgets/DataTransfer/choose.dart';
@@ -22,7 +23,7 @@ class HomeView extends StatelessWidget {
       children: [
         SizedBox(height: screenHeight * 0.05),
         Text(
-          "Professional Contact",
+          'title'.tr(),
           style: Theme.of(context).textTheme.headlineSmall,
         ),
         SizedBox(height: screenHeight * 0.05),
@@ -43,7 +44,7 @@ class HomeView extends StatelessWidget {
               await file.writeAsString(vCard);
               await Share.shareXFiles(
                 [XFile(file.path)],
-                subject: 'Professional Contact',
+                subject: 'title'.tr(),
                 text: vCard,
               );
               await file.delete();

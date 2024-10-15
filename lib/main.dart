@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Professional Contact NFC',
+      title: 'Professional Contact',
       theme: Provider.of<ThemeHelper>(context).currentTheme,
       debugShowCheckedModeBanner: false,
       localizationsDelegates: context.localizationDelegates,

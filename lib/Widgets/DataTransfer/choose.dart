@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:professional_contact/widgets/DataTransfer/nfc.dart';
 import 'package:professional_contact/widgets/DataTransfer/qr_code.dart';
@@ -78,7 +79,9 @@ class _ChooseDataTransferState extends State<ChooseDataTransfer> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        usingNfcAsDefault ? "Use QR Code" : "Use NFC",
+                        usingNfcAsDefault
+                            ? "transferTypes.qrCode".tr()
+                            : "transferTypes.nfc".tr(),
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               fontWeight: FontWeight.w500,
                               color: Colors.blue.shade700,
@@ -92,7 +95,7 @@ class _ChooseDataTransferState extends State<ChooseDataTransfer> {
               if (!nfcIsEnabled && nfcIsAvailable)
                 Badge(
                   label: Text(
-                    "NFC disabled or not supported",
+                    "nfc.disabledOrNotSupported".tr(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,

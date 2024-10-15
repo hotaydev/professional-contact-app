@@ -1,1 +1,53 @@
-{}
+{
+  "title": "Contato profissional",
+  "getStarted": "Para começar, adicione suas informações\nna aba \"perfil\".",
+  "nfc": {
+    "errorTransmitting": "Erro ao transferir dados via NFC!",
+    "disabledOrNotSupported": "NFC desabilitado ou não suportado"
+  },
+  "transferTypes": {
+    "qrCode": "Usar QR Code",
+    "nfc": "Usar NFC"
+  },
+  "settings": {
+    "title": "Configurações",
+    "theme": {
+      "title": "Tema",
+      "subtitle": "Alterar entre temas",
+      "light": "Claro",
+      "dark": "Escuro"
+    },
+    "nfc": {
+      "title": "Dispositivo com NFC",
+      "subtitle": "Desative isso se o seu dispositivo não tiver NFC para ocultar avisos"
+    },
+    "language": {
+      "title": "Idioma",
+      "subtitle": "Alterar entre idiomas",
+      "options": {
+        "portuguese": "Português",
+        "english": "Inglês"
+      }
+    },
+    "licenses": "Licenças",
+    "github": "Ver no GitHub",
+    "review": "Deixar uma crítica"
+  },
+  "profile": {
+    "title": "Preencha suas informações",
+    "subtitle": "Essas informações serão usadas para gerar seu cartão de contato profissional. Todos os campos são opcionais.",
+    "save": "Salvar",
+    "saved": "Informações salvas!",
+    "opt": {
+      "firstName": "Primeiro Nome",
+      "middleName": "Nome do Meio",
+      "lastName": "Sobrenome",
+      "org": "Organização",
+      "title": "Título / Cargo",
+      "phone": "Número de Telefone",
+      "email": "E-mail",
+      "url": "URL / Link",
+      "notes": "Notas"
+    }
+  }
+}

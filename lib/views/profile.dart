@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:professional_contact/helpers/vCard/vcard.dart';
 import 'package:professional_contact/helpers/vCard/vcard_parser.dart';
@@ -30,15 +31,15 @@ class _ProfileViewState extends State<ProfileView> {
     vCard = VCardParser().parse(widget.vCard);
 
     // Initialize form data with existing vCard values
-    _formData['First Name'] = vCard.firstName ?? "";
-    _formData['Middle Name'] = vCard.middleName ?? "";
-    _formData['Last Name'] = vCard.lastName ?? "";
-    _formData['Organization'] = vCard.organization ?? "";
-    _formData['Title / Role'] = vCard.jobTitle ?? "";
-    _formData['Phone Number'] = vCard.cellPhone ?? "";
-    _formData['Email'] = vCard.email ?? "";
-    _formData['URL'] = vCard.url ?? "";
-    _formData['Notes'] = vCard.note ?? "";
+    _formData['profile.opt.firstName'] = vCard.firstName ?? "";
+    _formData['profile.opt.middleName'] = vCard.middleName ?? "";
+    _formData['profile.opt.lastName'] = vCard.lastName ?? "";
+    _formData['profile.opt.org'] = vCard.organization ?? "";
+    _formData['profile.opt.title'] = vCard.jobTitle ?? "";
+    _formData['profile.opt.phone'] = vCard.cellPhone ?? "";
+    _formData['profile.opt.email'] = vCard.email ?? "";
+    _formData['profile.opt.url'] = vCard.url ?? "";
+    _formData['profile.opt.notes'] = vCard.note ?? "";
   }
 
   @override
@@ -55,13 +56,13 @@ class _ProfileViewState extends State<ProfileView> {
         child: Column(
           children: [
             Text(
-              "Fill your information",
+              "profile.title".tr(),
               style: Theme.of(context).textTheme.headlineSmall,
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 5),
             Text(
-              "This information will be used to generate your professional contact card. All fields are optional.",
+              "profile.subtitle".tr(),
               style: Theme.of(context).textTheme.bodyMedium,
               textAlign: TextAlign.center,
             ),
@@ -79,7 +80,7 @@ class _ProfileViewState extends State<ProfileView> {
                 elevation: 5,
               ),
               child: Text(
-                "Save",
+                "profile.save".tr(),
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.white,
@@ -101,7 +102,7 @@ class _ProfileViewState extends State<ProfileView> {
         child: TextFormField(
           initialValue: _formData[field],
           decoration: InputDecoration(
-            labelText: field,
+            labelText: field.tr(),
             border: OutlineInputBorder(),
           ),
           onSaved: (value) {
@@ -117,15 +118,15 @@ class _ProfileViewState extends State<ProfileView> {
       _formKey.currentState?.save();
 
       // Assign form values to vCard properties
-      vCard.firstName = _formData['First Name'];
-      vCard.middleName = _formData['Middle Name'];
-      vCard.lastName = _formData['Last Name'];
-      vCard.organization = _formData['Organization'];
-      vCard.jobTitle = _formData['Title / Role'];
-      vCard.cellPhone = _formData['Phone Number'];
-      vCard.email = _formData['Email'];
-      vCard.url = _formData['URL'];
-      vCard.note = _formData['Notes'];
+      vCard.firstName = _formData['profile.opt.firstName'];
+      vCard.middleName = _formData['profile.opt.middleName'];
+      vCard.lastName = _formData['profile.opt.lastName'];
+      vCard.organization = _formData['profile.opt.org'];
+      vCard.jobTitle = _formData['profile.opt.title'];
+      vCard.cellPhone = _formData['profile.opt.phone'];
+      vCard.email = _formData['profile.opt.email'];
+      vCard.url = _formData['profile.opt.url'];
+      vCard.note = _formData['profile.opt.notes'];
 
       String vCardString = vCard.getFormattedString();
 
@@ -152,7 +153,7 @@ class _ProfileViewState extends State<ProfileView> {
               borderRadius: BorderRadius.circular(10),
             ),
             content: Text(
-              "Information Saved!",
+              "profile.saved".tr(),
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,

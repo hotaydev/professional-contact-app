@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:isar/isar.dart';
@@ -53,6 +54,7 @@ class _PageLayoutState extends State<PageLayout> {
 
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 0,
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarIconBrightness:
               Provider.of<ThemeHelper>(context, listen: false)
@@ -77,7 +79,7 @@ class _PageLayoutState extends State<PageLayout> {
                             Spacer(),
                             Center(
                               child: Text(
-                                "To get started, add your information\nin the \"profile\" tab.",
+                                "getStarted".tr(),
                                 textAlign: TextAlign.center,
                               ),
                             ),
