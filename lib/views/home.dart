@@ -7,9 +7,11 @@ import 'package:share_plus/share_plus.dart';
 
 class HomeView extends StatelessWidget {
   final String vCard;
+  final bool withNfc;
   const HomeView({
     super.key,
     required this.vCard,
+    required this.withNfc,
   });
 
   @override
@@ -24,7 +26,7 @@ class HomeView extends StatelessWidget {
           style: Theme.of(context).textTheme.headlineSmall,
         ),
         SizedBox(height: screenHeight * 0.05),
-        ChooseDataTransfer(vCard: vCard),
+        ChooseDataTransfer(vCard: vCard, withNfc: withNfc),
         Spacer(),
         Container(
           decoration: BoxDecoration(

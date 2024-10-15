@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
-import 'package:professional_contact/models/contact.dart';
+import 'package:professional_contact/models/settings.dart';
 import 'package:professional_contact/views/home.dart';
 import 'package:professional_contact/views/profile.dart';
 import 'package:professional_contact/views/settings.dart';
@@ -19,7 +19,7 @@ class PageLayout extends StatefulWidget {
 class _PageLayoutState extends State<PageLayout> {
   bool hasBeenInitialized = false;
   CurrentView currentView = CurrentView.home;
-  late Stream<List<Contact>> _stream;
+  late Stream<List<SettingsModel>> _stream;
 
   @override
   void initState() {
@@ -28,7 +28,8 @@ class _PageLayoutState extends State<PageLayout> {
   }
 
   void loadInitialConfig() async {
-    Query<Contact> settingsQuery = isar.collection<Contact>().where().build();
+    Query<SettingsModel> settingsQuery =
+        isar.collection<SettingsModel>().where().build();
     setState(() {
       _stream = settingsQuery.watch(fireImmediately: true);
       hasBeenInitialized = true;
@@ -50,7 +51,7 @@ class _PageLayoutState extends State<PageLayout> {
     return Scaffold(
       body: SafeArea(
         child: hasBeenInitialized
-            ? StreamBuilder<List<Contact>>(
+            ? StreamBuilder<List<SettingsModel>>(
                 stream: _stream,
                 builder: (context, snapshot) {
                   if (!snapshot.hasData ||
@@ -71,6 +72,7 @@ class _PageLayoutState extends State<PageLayout> {
                         ),
                       CurrentView.settings => SettingsView(
                           vCard: '',
+                          withNfc: true,
                         ),
                       CurrentView.profile => ProfileView(
                           goToView: goToView,
@@ -82,9 +84,11 @@ class _PageLayoutState extends State<PageLayout> {
                   return switch (currentView) {
                     CurrentView.home => HomeView(
                         vCard: snapshot.data![0].vCard,
+                        withNfc: snapshot.data![0].withNfc,
                       ),
                     CurrentView.settings => SettingsView(
                         vCard: snapshot.data![0].vCard,
+                        withNfc: snapshot.data![0].withNfc,
                       ),
                     CurrentView.profile => ProfileView(
                         goToView: goToView,

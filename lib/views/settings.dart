@@ -2,13 +2,17 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:professional_contact/helpers/theme.dart';
 import 'package:professional_contact/helpers/urls.dart';
+import 'package:professional_contact/main.dart';
+import 'package:professional_contact/models/settings.dart';
 import 'package:provider/provider.dart';
 
 class SettingsView extends StatefulWidget {
   final String vCard;
+  final bool withNfc;
   const SettingsView({
     super.key,
     required this.vCard,
+    required this.withNfc,
   });
 
   @override
@@ -16,6 +20,14 @@ class SettingsView extends StatefulWidget {
 }
 
 class _SettingsViewState extends State<SettingsView> {
+  bool haveNfcAvailable = true;
+
+  @override
+  void initState() {
+    haveNfcAvailable = widget.withNfc;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -51,14 +63,32 @@ class _SettingsViewState extends State<SettingsView> {
                 child: Text('Dark'),
               ),
             ],
-            onChanged: (value) {
+            onChanged: (value) async {
               ThemeType currentTheme =
                   Provider.of<ThemeHelper>(context, listen: false).getTheme();
 
               if (value == 'Light' && currentTheme == ThemeType.dark) {
                 Provider.of<ThemeHelper>(context, listen: false).toggleTheme();
+
+                await isar.writeTxn(() async {
+                  SettingsModel? settings =
+                      await isar.collection<SettingsModel>().get(1);
+                  settings ??= SettingsModel();
+                  settings.theme = ThemeType.light;
+
+                  await isar.collection<SettingsModel>().put(settings);
+                });
               } else if (value == 'Dark' && currentTheme == ThemeType.light) {
                 Provider.of<ThemeHelper>(context, listen: false).toggleTheme();
+
+                await isar.writeTxn(() async {
+                  SettingsModel? settings =
+                      await isar.collection<SettingsModel>().get(1);
+                  settings ??= SettingsModel();
+                  settings.theme = ThemeType.dark;
+
+                  await isar.collection<SettingsModel>().put(settings);
+                });
               }
             },
           ),
@@ -69,8 +99,21 @@ class _SettingsViewState extends State<SettingsView> {
           title: Text('Device with NFC'),
           subtitle: Text(
               "Disable this if your device doesn't have NFC to hide warning messages"),
-          value: false,
-          onChanged: (value) {},
+          value: haveNfcAvailable,
+          activeColor: Colors.blue.shade500,
+          onChanged: (value) async {
+            setState(() {
+              haveNfcAvailable = value;
+            });
+            await isar.writeTxn(() async {
+              SettingsModel? settings =
+                  await isar.collection<SettingsModel>().get(1);
+              settings ??= SettingsModel();
+              settings.withNfc = value;
+
+              await isar.collection<SettingsModel>().put(settings);
+            });
+          },
         ),
         Divider(),
 
@@ -93,7 +136,7 @@ class _SettingsViewState extends State<SettingsView> {
                 child: Text('Portuguese'),
               ),
             ],
-            onChanged: (value) {
+            onChanged: (value) async {
               switch (value) {
                 case "English":
                   context.setLocale(Locale('en'));

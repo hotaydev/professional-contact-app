@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:professional_contact/helpers/vCard/vcard.dart';
 import 'package:professional_contact/helpers/vCard/vcard_parser.dart';
 import 'package:professional_contact/main.dart';
-import 'package:professional_contact/models/contact.dart';
+import 'package:professional_contact/models/settings.dart';
 import 'package:professional_contact/widgets/layout.dart';
 
 class ProfileView extends StatefulWidget {
@@ -126,16 +126,16 @@ class _ProfileViewState extends State<ProfileView> {
       vCard.email = _formData['Email'];
       vCard.url = _formData['URL'];
       vCard.note = _formData['Notes'];
-      vCard.version = '4.0';
 
       String vCardString = vCard.getFormattedString();
 
       await isar.writeTxn(() async {
-        Contact? savedContact = await isar.collection<Contact>().get(1);
-        savedContact ??= Contact();
-        savedContact.vCard = vCardString;
+        SettingsModel? savedSettings =
+            await isar.collection<SettingsModel>().get(1);
+        savedSettings ??= SettingsModel();
+        savedSettings.vCard = vCardString;
 
-        await isar.collection<Contact>().put(savedContact);
+        await isar.collection<SettingsModel>().put(savedSettings);
       });
 
       // Use the mounted property to check if the widget is still in the tree

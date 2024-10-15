@@ -5,9 +5,11 @@ import 'package:nfc_manager/nfc_manager.dart';
 
 class ChooseDataTransfer extends StatefulWidget {
   final String vCard;
+  final bool withNfc;
   const ChooseDataTransfer({
     super.key,
     required this.vCard,
+    required this.withNfc,
   });
 
   @override
@@ -17,6 +19,7 @@ class ChooseDataTransfer extends StatefulWidget {
 class _ChooseDataTransferState extends State<ChooseDataTransfer> {
   bool usingNfcAsDefault = true;
   bool nfcIsAvailable = false;
+  bool nfcIsEnabled = false;
   bool hasBeenInitialized = false;
 
   void _toggleTransferType() {
@@ -27,18 +30,22 @@ class _ChooseDataTransferState extends State<ChooseDataTransfer> {
 
   @override
   void initState() {
+    nfcIsAvailable = widget.withNfc;
     loadInitialConfig();
     super.initState();
   }
 
   void loadInitialConfig() async {
-    bool isAvailable = await NfcManager.instance.isAvailable();
+    if (widget.withNfc) {
+      bool isAvailable = await NfcManager.instance.isAvailable();
 
-    if (isAvailable) {
-      setState(() {
-        nfcIsAvailable = true;
-      });
+      if (isAvailable) {
+        setState(() {
+          nfcIsEnabled = true;
+        });
+      }
     }
+
     setState(() {
       hasBeenInitialized = true;
     });
@@ -50,14 +57,14 @@ class _ChooseDataTransferState extends State<ChooseDataTransfer> {
         ? Column(
             children: [
               Center(
-                child: nfcIsAvailable
+                child: nfcIsEnabled
                     ? usingNfcAsDefault
                         ? NfcDataTransfer(vCard: widget.vCard)
                         : QrCodeDataTransfer(vCard: widget.vCard)
                     : QrCodeDataTransfer(vCard: widget.vCard),
               ),
               SizedBox(height: 50),
-              if (nfcIsAvailable)
+              if (nfcIsEnabled)
                 TextButton(
                   onPressed: () {
                     _toggleTransferType();
@@ -82,7 +89,7 @@ class _ChooseDataTransferState extends State<ChooseDataTransfer> {
                     ],
                   ),
                 ),
-              if (!nfcIsAvailable)
+              if (!nfcIsEnabled && nfcIsAvailable)
                 Badge(
                   label: Text(
                     "NFC disabled or not supported",
