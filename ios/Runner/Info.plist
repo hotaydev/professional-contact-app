@@ -47,5 +47,10 @@
 	<true/>
 	<key>NFCReaderUsageDescription</key>
 	<string>Uses NFC to share your professional vCard via NFC</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>pt</string>
+	</array>
 </dict>
 </plist>

@@ -13,6 +13,11 @@ class VCardParser {
 
   VCard parse(String vCardString) {
     VCard vCard = VCard();
+
+    if (vCardString.isEmpty) {
+      return vCard;
+    }
+
     List<String> lines = vCardString.split(RegExp(r'\r\n|\n|\r'));
 
     for (String line in lines) {

@@ -1,4 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:professional_contact/helpers/theme.dart';
+import 'package:professional_contact/helpers/urls.dart';
+import 'package:provider/provider.dart';
 
 class SettingsView extends StatefulWidget {
   final String vCard;
@@ -27,12 +31,16 @@ class _SettingsViewState extends State<SettingsView> {
           ),
         ),
         SizedBox(height: screenHeight * 0.03),
-        // Theme Toggle
+
         ListTile(
           title: Text('Theme'),
-          subtitle: Text('Dark/Light'),
+          subtitle: Text('Change between themes'),
           trailing: DropdownButton<String>(
-            value: 'Light', // Placeholder for current theme selection
+            value:
+                Provider.of<ThemeHelper>(context, listen: false).getTheme() ==
+                        ThemeType.light
+                    ? 'Light'
+                    : 'Dark',
             items: [
               DropdownMenuItem(
                 value: 'Light',
@@ -44,78 +52,90 @@ class _SettingsViewState extends State<SettingsView> {
               ),
             ],
             onChanged: (value) {
-              // No functionality implemented
+              ThemeType currentTheme =
+                  Provider.of<ThemeHelper>(context, listen: false).getTheme();
+
+              if (value == 'Light' && currentTheme == ThemeType.dark) {
+                Provider.of<ThemeHelper>(context, listen: false).toggleTheme();
+              } else if (value == 'Dark' && currentTheme == ThemeType.light) {
+                Provider.of<ThemeHelper>(context, listen: false).toggleTheme();
+              }
             },
           ),
         ),
         Divider(),
 
-        // NFC Toggle
         SwitchListTile(
-          title: Text('NFC'),
-          subtitle: Text('Enable/Disable NFC'),
-          value: false, // Placeholder value
-          onChanged: (value) {
-            // No functionality implemented
-          },
+          title: Text('Device with NFC'),
+          subtitle: Text(
+              "Disable this if your device doesn't have NFC to hide warning messages"),
+          value: false,
+          onChanged: (value) {},
         ),
         Divider(),
 
-        // Language Selector
         ListTile(
           title: Text('Language'),
           subtitle: Text('Select Language'),
           trailing: DropdownButton<String>(
-            value: 'English', // Placeholder for current language selection
+            value: switch (context.locale.languageCode) {
+              "en" => "English",
+              "pt" => "Portuguese",
+              String() => "Portuguese",
+            },
             items: [
               DropdownMenuItem(
                 value: 'English',
                 child: Text('English'),
               ),
               DropdownMenuItem(
-                value: 'Spanish',
-                child: Text('Spanish'),
-              ),
-              DropdownMenuItem(
-                value: 'French',
-                child: Text('French'),
+                value: 'Portuguese',
+                child: Text('Portuguese'),
               ),
             ],
             onChanged: (value) {
-              // No functionality implemented
+              switch (value) {
+                case "English":
+                  context.setLocale(Locale('en'));
+                  break;
+                case "Portuguese":
+                  context.setLocale(Locale('pt'));
+                  break;
+                default:
+                  break;
+              }
             },
           ),
         ),
         Divider(),
 
-        // Licenses
         ListTile(
           leading: Icon(Icons.article_outlined),
           title: Text('See Licenses'),
           onTap: () {
-            // No functionality implemented
+            showLicensePage(context: context);
           },
         ),
         Divider(),
 
-        // GitHub
         ListTile(
           leading: Icon(Icons.code),
-          title: Text('Go to GitHub'),
+          title: Text('View in GitHub'),
           onTap: () {
-            // No functionality implemented
+            UrlHelper()
+                .open("https://github.com/hotaydev/professional-contact-nfc");
           },
         ),
         Divider(),
 
-        // Leave a Review
-        ListTile(
-          leading: Icon(Icons.star_outline),
-          title: Text('Leave a Review'),
-          onTap: () {
-            // No functionality implemented
-          },
-        ),
+        // Add Play Store link
+        // ListTile(
+        //   leading: Icon(Icons.star_outline),
+        //   title: Text('Leave a Review'),
+        //   onTap: () {
+        //     UrlHelper().open("");
+        //   },
+        // ),
       ],
     );
   }

@@ -70,11 +70,11 @@ class _PageLayoutState extends State<PageLayout> {
                           ],
                         ),
                       CurrentView.settings => SettingsView(
-                          vCard: snapshot.data![0].vCard,
+                          vCard: '',
                         ),
                       CurrentView.profile => ProfileView(
                           goToView: goToView,
-                          vCard: snapshot.data![0].vCard,
+                          vCard: '',
                         ),
                     };
                   }
