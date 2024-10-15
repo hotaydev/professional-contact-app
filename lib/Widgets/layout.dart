@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:isar/isar.dart';
+import 'package:professional_contact/helpers/theme.dart';
 import 'package:professional_contact/models/settings.dart';
 import 'package:professional_contact/views/home.dart';
 import 'package:professional_contact/views/profile.dart';
 import 'package:professional_contact/views/settings.dart';
+import 'package:provider/provider.dart';
 
 import '../main.dart';
 
@@ -49,6 +52,17 @@ class _PageLayoutState extends State<PageLayout> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      appBar: AppBar(
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarIconBrightness:
+              Provider.of<ThemeHelper>(context, listen: false)
+                  .currentTheme
+                  .brightness,
+          statusBarBrightness: Provider.of<ThemeHelper>(context, listen: false)
+              .currentTheme
+              .brightness,
+        ),
+      ),
       body: SafeArea(
         child: hasBeenInitialized
             ? StreamBuilder<List<SettingsModel>>(
