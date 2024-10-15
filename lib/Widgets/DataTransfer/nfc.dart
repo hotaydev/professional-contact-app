@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:nfc_manager/nfc_manager.dart';
+import 'package:professional_contact/helpers/theme.dart';
+import 'package:provider/provider.dart';
 
 class NfcDataTransfer extends StatefulWidget {
   final String vCard;
@@ -105,7 +107,11 @@ class _NfcDataTransferState extends State<NfcDataTransfer>
                 'NFC',
                 style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: Colors.blueGrey.shade800,
+                      color: Provider.of<ThemeHelper>(context, listen: false)
+                                  .getTheme() ==
+                              ThemeType.light
+                          ? Colors.blueGrey.shade800
+                          : Colors.blue.shade400,
                     ),
               ),
             ),
