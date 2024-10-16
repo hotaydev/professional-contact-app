@@ -80,8 +80,8 @@ class _ChooseDataTransferState extends State<ChooseDataTransfer> {
                     children: [
                       Text(
                         usingNfcAsDefault
-                            ? "transferTypes.qrCode".tr()
-                            : "transferTypes.nfc".tr(),
+                            ? 'transferTypes.qrCode'.tr()
+                            : 'transferTypes.nfc'.tr(),
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               fontWeight: FontWeight.w500,
                               color: Colors.blue.shade700,
@@ -95,7 +95,7 @@ class _ChooseDataTransferState extends State<ChooseDataTransfer> {
               if (!nfcIsEnabled && nfcIsAvailable)
                 Badge(
                   label: Text(
-                    "nfc.disabledOrNotSupported".tr(),
+                    'nfc.disabledOrNotSupported'.tr(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,

@@ -13,6 +13,9 @@ clean:
 upgrade:
 	flutter packages upgrade
 
+outdated:
+	flutter packages outdated
+
 get:
 	flutter pub get
 

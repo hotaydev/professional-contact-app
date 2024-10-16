@@ -42,15 +42,16 @@ class HomeView extends StatelessWidget {
             onPressed: () async {
               final box =
                   context.findRenderObject() as RenderBox?; // Required for iPad
+              final professionalContactText =
+                  '${'title'.tr()} - ${VCardParser().parse(vCard).formattedName}';
               final tempDir = await getTemporaryDirectory();
               final file = File('${tempDir.path}/contact.vcf');
               await file.writeAsString(vCard);
               await Share.shareXFiles(
                 [XFile(file.path, mimeType: 'text/vcard')],
-                subject:
-                    '${'title'.tr()} - ${VCardParser().parse(vCard).formattedName}',
+                subject: professionalContactText,
                 sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
-                text: vCard,
+                text: professionalContactText,
               );
               await file.delete();
             },

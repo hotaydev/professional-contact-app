@@ -70,7 +70,7 @@ class _NfcDataTransferState extends State<NfcDataTransfer>
               ),
               duration: const Duration(milliseconds: 2000),
               content: Text(
-                "nfc.errorTransmitting".tr(),
+                'nfc.errorTransmitting'.tr(),
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,

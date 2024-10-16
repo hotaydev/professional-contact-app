@@ -31,28 +31,27 @@ class VCardFormatter {
     formattedVCardString +=
         'N:${e(vCard.lastName)};${e(vCard.firstName)};${e(vCard.middleName)};;${nl()}';
 
-    if ((vCard.email ?? "").isNotEmpty) {
+    if ((vCard.email ?? '').isNotEmpty) {
       formattedVCardString += 'EMAIL;TYPE=INTERNET:${e(vCard.email)}${nl()}';
     }
 
-    if ((vCard.cellPhone ?? "").isNotEmpty) {
-      // TODO: format this phone number properly
+    if ((vCard.cellPhone ?? '').isNotEmpty) {
       formattedVCardString += 'TEL;TYPE=CELL:${e(vCard.cellPhone)}${nl()}';
     }
 
-    if ((vCard.jobTitle ?? "").isNotEmpty) {
+    if ((vCard.jobTitle ?? '').isNotEmpty) {
       formattedVCardString += 'TITLE:${e(vCard.jobTitle ?? '')}${nl()}';
     }
 
-    if ((vCard.organization ?? "").isNotEmpty) {
+    if ((vCard.organization ?? '').isNotEmpty) {
       formattedVCardString += 'ORG:${e(vCard.organization ?? '')}${nl()}';
     }
 
-    if ((vCard.url ?? "").isNotEmpty) {
+    if ((vCard.url ?? '').isNotEmpty) {
       formattedVCardString += 'URL:${e(vCard.url ?? '')}${nl()}';
     }
 
-    if ((vCard.note ?? "").isNotEmpty) {
+    if ((vCard.note ?? '').isNotEmpty) {
       formattedVCardString += 'NOTE:${e(vCard.note ?? '')}${nl()}';
     }
 

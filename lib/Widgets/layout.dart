@@ -79,7 +79,7 @@ class _PageLayoutState extends State<PageLayout> {
                             Spacer(),
                             Center(
                               child: Text(
-                                "getStarted".tr(),
+                                'getStarted'.tr(),
                                 textAlign: TextAlign.center,
                               ),
                             ),

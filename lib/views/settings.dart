@@ -129,9 +129,9 @@ class _SettingsViewState extends State<SettingsView> {
                 subtitle: Text('settings.language.subtitle'.tr()),
                 trailing: DropdownButton<String>(
                   value: switch (context.locale.languageCode) {
-                    "en" => "English",
-                    "pt" => "Portuguese",
-                    String() => "Portuguese",
+                    'en' => 'English',
+                    'pt' => 'Portuguese',
+                    String() => 'Portuguese',
                   },
                   items: [
                     DropdownMenuItem(
@@ -145,10 +145,10 @@ class _SettingsViewState extends State<SettingsView> {
                   ],
                   onChanged: (value) async {
                     switch (value) {
-                      case "English":
+                      case 'English':
                         context.setLocale(Locale('en'));
                         break;
-                      case "Portuguese":
+                      case 'Portuguese':
                         context.setLocale(Locale('pt'));
                         break;
                       default:
@@ -173,7 +173,7 @@ class _SettingsViewState extends State<SettingsView> {
                 title: Text('settings.github'.tr()),
                 onTap: () {
                   UrlHelper().open(
-                      "https://github.com/hotaydev/professional-contact-nfc");
+                      'https://github.com/hotaydev/professional-contact-nfc');
                 },
               ),
               Divider(),
@@ -198,12 +198,12 @@ class _SettingsViewState extends State<SettingsView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "settings.hotay.createdBy".tr(),
+                    'settings.hotay.createdBy'.tr(),
                   ),
                   SizedBox(width: 8),
                   GestureDetector(
                     onTap: () {
-                      UrlHelper().open("https://www.hotay.dev");
+                      UrlHelper().open('https://www.hotay.dev');
                     },
                     child: SvgPicture.asset(
                       "assets/icon/hotay-logo/logo-${Provider.of<ThemeHelper>(context).getTheme() == ThemeType.light ? "dark" : "light"}.svg",
@@ -214,15 +214,15 @@ class _SettingsViewState extends State<SettingsView> {
                 ],
               ),
               Text(
-                "settings.hotay.wantAnApp".tr(),
+                'settings.hotay.wantAnApp'.tr(),
                 textAlign: TextAlign.center,
               ),
               GestureDetector(
                 onTap: () {
-                  UrlHelper().open("https://go.hotay.dev/orcamento");
+                  UrlHelper().open('https://go.hotay.dev/orcamento');
                 },
                 child: Text(
-                  "settings.hotay.contact".tr(),
+                  'settings.hotay.contact'.tr(),
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.bold,

@@ -31,15 +31,15 @@ class _ProfileViewState extends State<ProfileView> {
     vCard = VCardParser().parse(widget.vCard);
 
     // Initialize form data with existing vCard values
-    _formData['profile.opt.firstName'] = vCard.firstName ?? "";
-    _formData['profile.opt.middleName'] = vCard.middleName ?? "";
-    _formData['profile.opt.lastName'] = vCard.lastName ?? "";
-    _formData['profile.opt.org'] = vCard.organization ?? "";
-    _formData['profile.opt.title'] = vCard.jobTitle ?? "";
-    _formData['profile.opt.phone'] = vCard.cellPhone ?? "";
-    _formData['profile.opt.email'] = vCard.email ?? "";
-    _formData['profile.opt.url'] = vCard.url ?? "";
-    _formData['profile.opt.notes'] = vCard.note ?? "";
+    _formData['profile.opt.firstName'] = vCard.firstName ?? '';
+    _formData['profile.opt.middleName'] = vCard.middleName ?? '';
+    _formData['profile.opt.lastName'] = vCard.lastName ?? '';
+    _formData['profile.opt.org'] = vCard.organization ?? '';
+    _formData['profile.opt.title'] = vCard.jobTitle ?? '';
+    _formData['profile.opt.phone'] = vCard.cellPhone ?? '';
+    _formData['profile.opt.email'] = vCard.email ?? '';
+    _formData['profile.opt.url'] = vCard.url ?? '';
+    _formData['profile.opt.notes'] = vCard.note ?? '';
   }
 
   @override
@@ -56,13 +56,13 @@ class _ProfileViewState extends State<ProfileView> {
         child: Column(
           children: [
             Text(
-              "profile.title".tr(),
+              'profile.title'.tr(),
               style: Theme.of(context).textTheme.headlineSmall,
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 5),
             Text(
-              "profile.subtitle".tr(),
+              'profile.subtitle'.tr(),
               style: Theme.of(context).textTheme.bodyMedium,
               textAlign: TextAlign.center,
             ),
@@ -80,7 +80,7 @@ class _ProfileViewState extends State<ProfileView> {
                 elevation: 5,
               ),
               child: Text(
-                "profile.save".tr(),
+                'profile.save'.tr(),
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.white,
@@ -106,7 +106,7 @@ class _ProfileViewState extends State<ProfileView> {
             border: OutlineInputBorder(),
           ),
           onSaved: (value) {
-            _formData[field] = value ?? "";
+            _formData[field] = value ?? '';
           },
         ),
       );
@@ -156,7 +156,7 @@ class _ProfileViewState extends State<ProfileView> {
             ),
             duration: const Duration(milliseconds: 2000),
             content: Text(
-              "profile.saved".tr(),
+              'profile.saved'.tr(),
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,

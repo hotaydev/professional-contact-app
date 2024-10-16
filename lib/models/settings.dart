@@ -7,7 +7,7 @@ part 'settings.g.dart';
 class SettingsModel {
   Id id = Isar.autoIncrement;
 
-  String vCard = "";
+  String vCard = '';
 
   @Enumerated(EnumType.ordinal)
   ThemeType theme = ThemeType.light;
