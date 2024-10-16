@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 
 /// App Dark Theme
-ThemeData darkTheme = ThemeData.dark().copyWith();
+ThemeData darkTheme = ThemeData.dark().copyWith(
+  textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'OpenSans'),
+  primaryTextTheme:
+      ThemeData.dark().primaryTextTheme.apply(fontFamily: 'OpenSans'),
+);
 
 /// App Light Theme
-ThemeData lightTheme = ThemeData.light().copyWith();
+ThemeData lightTheme = ThemeData.light().copyWith(
+  textTheme: ThemeData.light().textTheme.apply(fontFamily: 'OpenSans'),
+  primaryTextTheme:
+      ThemeData.light().primaryTextTheme.apply(fontFamily: 'OpenSans'),
+);
 
 /// Available app themes
 enum ThemeType { light, dark }

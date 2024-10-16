@@ -4,6 +4,9 @@ apk:
 appbundle:
 	flutter build appbundle --release
 
+analyze:
+	flutter build appbundle --target-platform android-arm64 --analyze-size
+
 isar:
 	dart run build_runner build
 
@@ -22,4 +25,4 @@ get:
 icons:
 	dart run flutter_launcher_icons
 
-.PHONY: build
+.PHONY: apk

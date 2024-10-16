@@ -43,6 +43,8 @@ class VCardParser {
       }
     }
 
+    vCard.version = '3.0';
+
     return vCard;
   }
 }

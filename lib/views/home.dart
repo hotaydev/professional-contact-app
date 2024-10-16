@@ -51,7 +51,7 @@ class HomeView extends StatelessWidget {
                 [XFile(file.path, mimeType: 'text/vcard')],
                 subject: professionalContactText,
                 sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
-                text: professionalContactText,
+                // text: professionalContactText, // Not being used since it doesn't work on WhatsApp
               );
               await file.delete();
             },

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:professional_contact/helpers/theme.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class QrCodeDataTransfer extends StatelessWidget {
   final String vCard;
@@ -25,13 +25,10 @@ class QrCodeDataTransfer extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.all(20),
-          child: PrettyQrView.data(
+          child: QrImageView(
             data: vCard,
-            decoration: const PrettyQrDecoration(
-              shape: PrettyQrSmoothSymbol(
-                roundFactor: 0,
-              ),
-            ),
+            version: QrVersions.auto,
+            // size: 200.0,
           ),
         ),
       ),
