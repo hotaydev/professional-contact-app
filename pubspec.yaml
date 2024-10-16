@@ -10,11 +10,10 @@ environment:
   sdk: ^3.5.3
 
 dependencies:
-  easy_localization: ^3.0.7
+  easy_localization: ^3.0.7 # To reduce the final bundle size we could change this dependency by `flutter_localizations`, since it's only a wrapper to it makig it simpler.
   flutter:
     sdk: flutter
   nfc_manager: ^3.5.0
-  path: ^1.9.0
   path_provider: ^2.1.4
   provider: ^6.1.2
   qr_flutter: ^4.1.0
