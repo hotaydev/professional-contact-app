@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:professional_contact/helpers/theme.dart';
 import 'package:professional_contact/helpers/urls.dart';
 import 'package:provider/provider.dart';
@@ -181,9 +180,8 @@ class _SettingsViewState extends State<SettingsView> {
                     onTap: () {
                       UrlHelper().open('https://www.hotay.dev');
                     },
-                    child: SvgPicture.asset(
-                      "assets/icon/hotay-logo/logo-${Provider.of<ThemeHelper>(context).getTheme() == ThemeType.light ? "dark" : "light"}.svg",
-                      semanticsLabel: 'Hotay logo',
+                    child: Image.asset(
+                      "assets/images/logo-${Provider.of<ThemeHelper>(context).getTheme() == ThemeType.light ? "dark" : "light"}.png",
                       width: 70,
                     ),
                   ),
