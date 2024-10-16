@@ -3,7 +3,8 @@
   "getStarted": "To get started, add your information\nin the \"profile\" tab.",
   "nfc": {
     "errorTransmitting": "Error transferring data via NFC!",
-    "disabledOrNotSupported": "NFC disabled or not supported"
+    "disabledOrNotSupported": "NFC disabled or not supported",
+    "sent": "SENT"
   },
   "transferTypes": {
     "qrCode": "Use QR Code",
@@ -31,7 +32,12 @@
     },
     "licenses": "Licenses",
     "github": "View in GitHub",
-    "review": "Leave a Review"
+    "review": "Leave a Review",
+    "hotay": {
+      "createdBy": "Application created for free by",
+      "wantAnApp": "Do you want an app or system for your company?",
+      "contact": "Get in Touch!"
+    }
   },
   "profile": {
     "title": "Fill your information",

@@ -18,7 +18,7 @@ class VCardFormatter {
   String getFormattedString(VCard vCard) {
     String formattedVCardString = '';
     formattedVCardString += 'BEGIN:VCARD${nl()}';
-    formattedVCardString += 'VERSION:${vCard.version}${nl()}';
+    formattedVCardString += 'VERSION:3.0${nl()}';
 
     String formattedName = vCard.formattedName ?? '';
 
@@ -32,12 +32,12 @@ class VCardFormatter {
         'N:${e(vCard.lastName)};${e(vCard.firstName)};${e(vCard.middleName)};;${nl()}';
 
     if ((vCard.email ?? "").isNotEmpty) {
-      formattedVCardString += 'EMAIL;type=HOME:${e(vCard.email)}${nl()}';
+      formattedVCardString += 'EMAIL;TYPE=INTERNET:${e(vCard.email)}${nl()}';
     }
 
     if ((vCard.cellPhone ?? "").isNotEmpty) {
-      formattedVCardString +=
-          'TEL;TYPE="voice,cell":${e(vCard.cellPhone)}${nl()}';
+      // TODO: format this phone number properly
+      formattedVCardString += 'TEL;TYPE=CELL:${e(vCard.cellPhone)}${nl()}';
     }
 
     if ((vCard.jobTitle ?? "").isNotEmpty) {
@@ -55,8 +55,6 @@ class VCardFormatter {
     if ((vCard.note ?? "").isNotEmpty) {
       formattedVCardString += 'NOTE:${e(vCard.note ?? '')}${nl()}';
     }
-
-    formattedVCardString += 'REV:${DateTime.now().toIso8601String()}${nl()}';
 
     formattedVCardString += 'END:VCARD${nl()}';
     return formattedVCardString;

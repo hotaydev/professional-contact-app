@@ -28,10 +28,10 @@ class VCardParser {
         vCard.lastName = decode(nameParts[0]);
         vCard.firstName = decode(nameParts.length > 1 ? nameParts[1] : '');
         vCard.middleName = decode(nameParts.length > 2 ? nameParts[2] : '');
-      } else if (line.startsWith('EMAIL;type=HOME:')) {
-        vCard.email = decode(line.substring(16));
-      } else if (line.startsWith('TEL;TYPE="voice,cell":')) {
-        vCard.cellPhone = decode(line.substring(22));
+      } else if (line.startsWith('EMAIL;TYPE=INTERNET:')) {
+        vCard.email = decode(line.substring(20));
+      } else if (line.startsWith('TEL;TYPE=CELL:')) {
+        vCard.cellPhone = decode(line.substring(14));
       } else if (line.startsWith('TITLE:')) {
         vCard.jobTitle = decode(line.substring(6));
       } else if (line.startsWith('ORG:')) {
@@ -40,8 +40,6 @@ class VCardParser {
         vCard.url = decode(line.substring(4));
       } else if (line.startsWith('NOTE:')) {
         vCard.note = decode(line.substring(5));
-      } else if (line.startsWith('VERSION:')) {
-        vCard.version = decode(line.substring(8));
       }
     }
 

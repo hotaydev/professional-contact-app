@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:professional_contact/helpers/vCard/vcard_parser.dart';
 import 'package:professional_contact/widgets/DataTransfer/choose.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -39,12 +40,16 @@ class HomeView extends StatelessWidget {
           ),
           child: IconButton(
             onPressed: () async {
+              final box =
+                  context.findRenderObject() as RenderBox?; // Required for iPad
               final tempDir = await getTemporaryDirectory();
               final file = File('${tempDir.path}/contact.vcf');
               await file.writeAsString(vCard);
               await Share.shareXFiles(
-                [XFile(file.path)],
-                subject: 'title'.tr(),
+                [XFile(file.path, mimeType: 'text/vcard')],
+                subject:
+                    '${'title'.tr()} - ${VCardParser().parse(vCard).formattedName}',
+                sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
                 text: vCard,
               );
               await file.delete();

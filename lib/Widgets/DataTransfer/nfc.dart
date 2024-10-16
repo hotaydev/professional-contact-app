@@ -20,6 +20,7 @@ class NfcDataTransfer extends StatefulWidget {
 class _NfcDataTransferState extends State<NfcDataTransfer>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+  bool isTransmitting = true;
 
   @override
   void initState() {
@@ -28,6 +29,20 @@ class _NfcDataTransferState extends State<NfcDataTransfer>
       vsync: this,
       duration: const Duration(seconds: 2),
     )..repeat();
+    transferContactWithNfc();
+  }
+
+  void haveTransmittedSuccesfully() {
+    setState(() {
+      isTransmitting = false;
+    });
+
+    Future.delayed(const Duration(milliseconds: 2000), () {
+      setState(() {
+        isTransmitting = true;
+      });
+      transferContactWithNfc();
+    });
   }
 
   void transferContactWithNfc() async {
@@ -37,6 +52,9 @@ class _NfcDataTransferState extends State<NfcDataTransfer>
             NdefMessage([NdefRecord.createText(widget.vCard)]);
         await Ndef.from(tag)?.write(message);
         NfcManager.instance.stopSession();
+        setState(() {
+          isTransmitting = false;
+        });
       } catch (e) {
         debugPrint('Error emitting NFC data: $e');
 
@@ -50,6 +68,7 @@ class _NfcDataTransferState extends State<NfcDataTransfer>
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
+              duration: const Duration(milliseconds: 2000),
               content: Text(
                 "nfc.errorTransmitting".tr(),
                 style: TextStyle(
@@ -81,42 +100,72 @@ class _NfcDataTransferState extends State<NfcDataTransfer>
       height: screenWidth * 0.85,
       child: Stack(
         alignment: Alignment.center,
-        children: [
-          AnimatedBuilder(
-            animation: _controller,
-            builder: (context, child) {
-              return CustomPaint(
-                painter: WavePainter(_controller.value),
-                child: const SizedBox.expand(),
-              );
-            },
-          ),
-          Container(
-            width: screenWidth * 0.4,
-            height: screenWidth * 0.4,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: Colors.blue,
-                width: 4,
-              ),
-              color: Theme.of(context).scaffoldBackgroundColor,
-            ),
-            child: Center(
-              child: Text(
-                'NFC',
-                style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: Provider.of<ThemeHelper>(context, listen: false)
-                                  .getTheme() ==
-                              ThemeType.light
-                          ? Colors.blueGrey.shade800
-                          : Colors.blue.shade400,
+        children: isTransmitting
+            ? [
+                AnimatedBuilder(
+                  animation: _controller,
+                  builder: (context, child) {
+                    return CustomPaint(
+                      painter: WavePainter(_controller.value),
+                      child: const SizedBox.expand(),
+                    );
+                  },
+                ),
+                Container(
+                  width: screenWidth * 0.4,
+                  height: screenWidth * 0.4,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Colors.blue,
+                      width: 4,
                     ),
-              ),
-            ),
-          ),
-        ],
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                  ),
+                  child: Center(
+                    child: Text(
+                      'NFC',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineLarge
+                          ?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color:
+                                Provider.of<ThemeHelper>(context, listen: false)
+                                            .getTheme() ==
+                                        ThemeType.light
+                                    ? Colors.blueGrey.shade800
+                                    : Colors.blue.shade400,
+                          ),
+                    ),
+                  ),
+                ),
+              ]
+            : [
+                Container(
+                  width: screenWidth * 0.4,
+                  height: screenWidth * 0.4,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Colors.green.shade400,
+                      width: 4,
+                    ),
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    // color: Colors.green.shade50,
+                  ),
+                  child: Center(
+                    child: Text(
+                      'nfc.sent'.tr(),
+                      style:
+                          Theme.of(context).textTheme.headlineLarge?.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.green.shade700,
+                              ),
+                    ),
+                  ),
+                ),
+              ],
       ),
     );
   }

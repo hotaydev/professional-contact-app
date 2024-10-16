@@ -32,7 +32,7 @@ class VCard {
   String? url;
 
   /// vCard version
-  String version = '4.0';
+  String version = '3.0';
 
   /// Get formatted vCard as String
   String getFormattedString() => VCardFormatter().getFormattedString(this);

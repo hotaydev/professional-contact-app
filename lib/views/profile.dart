@@ -141,6 +141,8 @@ class _ProfileViewState extends State<ProfileView> {
 
       // Use the mounted property to check if the widget is still in the tree
       if (mounted) {
+        FocusManager.instance.primaryFocus?.unfocus(); // dismiss Keyboard
+
         widget.goToView(CurrentView.home);
 
         ScaffoldMessenger.of(context).showSnackBar(
@@ -152,6 +154,7 @@ class _ProfileViewState extends State<ProfileView> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
+            duration: const Duration(milliseconds: 2000),
             content: Text(
               "profile.saved".tr(),
               style: TextStyle(

@@ -52,5 +52,7 @@
 		<string>en</string>
 		<string>pt</string>
 	</array>
+	<key>CFBundleAllowMixedLocalizations</key>
+	<true/>
 </dict>
 </plist>
