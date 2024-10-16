@@ -7,9 +7,6 @@ appbundle:
 analyze:
 	flutter build appbundle --target-platform android-arm64 --analyze-size
 
-isar:
-	dart run build_runner build
-
 clean:
 	flutter clean
 

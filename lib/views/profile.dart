@@ -2,18 +2,17 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:professional_contact/helpers/vCard/vcard.dart';
 import 'package:professional_contact/helpers/vCard/vcard_parser.dart';
-import 'package:professional_contact/main.dart';
-import 'package:professional_contact/models/settings.dart';
 import 'package:professional_contact/widgets/layout.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileView extends StatefulWidget {
   final Function goToView;
-  final String vCard;
+  final SharedPreferences preferences;
 
   const ProfileView({
     super.key,
     required this.goToView,
-    required this.vCard,
+    required this.preferences,
   });
 
   @override
@@ -28,7 +27,7 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   void initState() {
     super.initState();
-    vCard = VCardParser().parse(widget.vCard);
+    vCard = VCardParser().parse(widget.preferences.getString('vCard') ?? '');
 
     // Initialize form data with existing vCard values
     _formData['profile.opt.firstName'] = vCard.firstName ?? '';
@@ -130,14 +129,7 @@ class _ProfileViewState extends State<ProfileView> {
 
       String vCardString = vCard.getFormattedString();
 
-      await isar.writeTxn(() async {
-        SettingsModel? savedSettings =
-            await isar.collection<SettingsModel>().get(1);
-        savedSettings ??= SettingsModel();
-        savedSettings.vCard = vCardString;
-
-        await isar.collection<SettingsModel>().put(savedSettings);
-      });
+      widget.preferences.setString('vCard', vCardString);
 
       // Use the mounted property to check if the widget is still in the tree
       if (mounted) {

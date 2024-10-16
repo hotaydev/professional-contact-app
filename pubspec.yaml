@@ -14,22 +14,19 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_svg: ^2.0.10+1
-  isar: ^3.1.0+1
-  isar_flutter_libs: ^3.1.0+1
   nfc_manager: ^3.5.0
   path: ^1.9.0
   path_provider: ^2.1.4
   provider: ^6.1.2
   qr_flutter: ^4.1.0
   share_plus: ^10.0.3
+  shared_preferences: ^2.3.2
   url_launcher: ^6.3.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
-  isar_generator: ^3.1.0+1
-  build_runner: ^2.4.13
   flutter_launcher_icons: "^0.14.1"
 
 flutter:

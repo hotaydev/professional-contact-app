@@ -3,17 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:professional_contact/helpers/theme.dart';
 import 'package:professional_contact/helpers/urls.dart';
-import 'package:professional_contact/main.dart';
-import 'package:professional_contact/models/settings.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsView extends StatefulWidget {
-  final String vCard;
-  final bool withNfc;
+  final SharedPreferences preferences;
   const SettingsView({
     super.key,
-    required this.vCard,
-    required this.withNfc,
+    required this.preferences,
   });
 
   @override
@@ -25,7 +22,7 @@ class _SettingsViewState extends State<SettingsView> {
 
   @override
   void initState() {
-    haveNfcAvailable = widget.withNfc;
+    haveNfcAvailable = widget.preferences.getBool('withNfc') ?? true;
     super.initState();
   }
 
@@ -76,27 +73,13 @@ class _SettingsViewState extends State<SettingsView> {
                       Provider.of<ThemeHelper>(context, listen: false)
                           .toggleTheme();
 
-                      await isar.writeTxn(() async {
-                        SettingsModel? settings =
-                            await isar.collection<SettingsModel>().get(1);
-                        settings ??= SettingsModel();
-                        settings.theme = ThemeType.light;
-
-                        await isar.collection<SettingsModel>().put(settings);
-                      });
+                      widget.preferences.setBool('isLightTheme', true);
                     } else if (value == 'Dark' &&
                         currentTheme == ThemeType.light) {
                       Provider.of<ThemeHelper>(context, listen: false)
                           .toggleTheme();
 
-                      await isar.writeTxn(() async {
-                        SettingsModel? settings =
-                            await isar.collection<SettingsModel>().get(1);
-                        settings ??= SettingsModel();
-                        settings.theme = ThemeType.dark;
-
-                        await isar.collection<SettingsModel>().put(settings);
-                      });
+                      widget.preferences.setBool('isLightTheme', false);
                     }
                   },
                 ),
@@ -112,14 +95,7 @@ class _SettingsViewState extends State<SettingsView> {
                   setState(() {
                     haveNfcAvailable = value;
                   });
-                  await isar.writeTxn(() async {
-                    SettingsModel? settings =
-                        await isar.collection<SettingsModel>().get(1);
-                    settings ??= SettingsModel();
-                    settings.withNfc = value;
-
-                    await isar.collection<SettingsModel>().put(settings);
-                  });
+                  widget.preferences.setBool('withNfc', value);
                 },
               ),
               Divider(),

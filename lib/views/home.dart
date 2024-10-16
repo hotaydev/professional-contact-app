@@ -6,14 +6,13 @@ import 'package:path_provider/path_provider.dart';
 import 'package:professional_contact/helpers/vCard/vcard_parser.dart';
 import 'package:professional_contact/widgets/DataTransfer/choose.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeView extends StatelessWidget {
-  final String vCard;
-  final bool withNfc;
+  final SharedPreferences preferences;
   const HomeView({
     super.key,
-    required this.vCard,
-    required this.withNfc,
+    required this.preferences,
   });
 
   @override
@@ -28,7 +27,10 @@ class HomeView extends StatelessWidget {
           style: Theme.of(context).textTheme.headlineSmall,
         ),
         SizedBox(height: screenHeight * 0.05),
-        ChooseDataTransfer(vCard: vCard, withNfc: withNfc),
+        ChooseDataTransfer(
+          vCard: preferences.getString('vCard') ?? '',
+          withNfc: preferences.getBool('withNfc') ?? true,
+        ),
         Spacer(),
         Container(
           decoration: BoxDecoration(
@@ -43,10 +45,10 @@ class HomeView extends StatelessWidget {
               final box =
                   context.findRenderObject() as RenderBox?; // Required for iPad
               final professionalContactText =
-                  '${'title'.tr()} - ${VCardParser().parse(vCard).formattedName}';
+                  '${'title'.tr()} - ${VCardParser().parse(preferences.getString('vCard') ?? '').formattedName}';
               final tempDir = await getTemporaryDirectory();
               final file = File('${tempDir.path}/contact.vcf');
-              await file.writeAsString(vCard);
+              await file.writeAsString(preferences.getString('vCard') ?? '');
               await Share.shareXFiles(
                 [XFile(file.path, mimeType: 'text/vcard')],
                 subject: professionalContactText,
