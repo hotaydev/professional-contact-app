@@ -9,6 +9,7 @@ analyze:
 
 clean:
 	flutter clean
+	flutter pub get
 
 upgrade:
 	flutter packages upgrade

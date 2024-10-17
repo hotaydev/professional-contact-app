@@ -48,6 +48,7 @@ class _SettingsViewState extends State<SettingsView> {
                 title: Text('settings.theme.title'.tr()),
                 subtitle: Text('settings.theme.subtitle'.tr()),
                 trailing: DropdownButton<String>(
+                  dropdownColor: Theme.of(context).scaffoldBackgroundColor,
                   value: Provider.of<ThemeHelper>(context, listen: false)
                               .getTheme() ==
                           ThemeType.light
@@ -103,6 +104,7 @@ class _SettingsViewState extends State<SettingsView> {
                 title: Text('settings.language.title'.tr()),
                 subtitle: Text('settings.language.subtitle'.tr()),
                 trailing: DropdownButton<String>(
+                  dropdownColor: Theme.of(context).scaffoldBackgroundColor,
                   value: switch (context.locale.languageCode) {
                     'en' => 'English',
                     'pt' => 'Portuguese',

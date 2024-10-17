@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:professional_contact/helpers/theme.dart';
 import 'package:professional_contact/helpers/vCard/vcard.dart';
 import 'package:professional_contact/helpers/vCard/vcard_parser.dart';
 import 'package:professional_contact/widgets/layout.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileView extends StatefulWidget {
@@ -102,7 +104,44 @@ class _ProfileViewState extends State<ProfileView> {
           initialValue: _formData[field],
           decoration: InputDecoration(
             labelText: field.tr(),
-            border: OutlineInputBorder(),
+            floatingLabelStyle: WidgetStateTextStyle.resolveWith(
+              (Set<WidgetState> states) {
+                if (states.contains(WidgetState.focused)) {
+                  return TextStyle(
+                    color: Provider.of<ThemeHelper>(context, listen: false)
+                                .getTheme() ==
+                            ThemeType.light
+                        ? Colors.blue.shade800
+                        : Colors.blue.shade500,
+                  );
+                }
+                return TextStyle();
+              },
+            ),
+            labelStyle: TextStyle(
+              color: Theme.of(context).textTheme.bodyMedium?.color,
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Provider.of<ThemeHelper>(context, listen: false)
+                            .getTheme() ==
+                        ThemeType.light
+                    ? Colors.blue.shade800
+                    : Colors.blue.shade500,
+                // width: 2.0,
+              ),
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Provider.of<ThemeHelper>(context, listen: false)
+                            .getTheme() ==
+                        ThemeType.light
+                    ? Colors.blue.shade800
+                    : Colors.blue.shade500,
+              ),
+              borderRadius: BorderRadius.circular(8.0),
+            ),
           ),
           onSaved: (value) {
             _formData[field] = value ?? '';
@@ -140,7 +179,7 @@ class _ProfileViewState extends State<ProfileView> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             behavior: SnackBarBehavior.floating,
-            backgroundColor: Colors.green.shade600,
+            backgroundColor: Colors.green.shade500,
             margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             shape: RoundedRectangleBorder(

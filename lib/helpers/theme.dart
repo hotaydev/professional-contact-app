@@ -2,16 +2,40 @@ import 'package:flutter/material.dart';
 
 /// App Dark Theme
 ThemeData darkTheme = ThemeData.dark().copyWith(
-  textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'OpenSans'),
-  primaryTextTheme:
-      ThemeData.dark().primaryTextTheme.apply(fontFamily: 'OpenSans'),
+  textTheme: ThemeData.dark().textTheme.apply(
+        fontFamily: 'OpenSans',
+        bodyColor: Colors.white,
+        displayColor: Colors.white,
+      ),
+  primaryTextTheme: ThemeData.dark().primaryTextTheme.apply(
+        fontFamily: 'OpenSans',
+        bodyColor: Colors.white,
+        displayColor: Colors.white,
+      ),
+  scaffoldBackgroundColor: Color(0xFF181818),
+  appBarTheme: AppBarTheme(
+    backgroundColor: Color(0xFF181818),
+    foregroundColor: Colors.white,
+  ),
 );
 
 /// App Light Theme
 ThemeData lightTheme = ThemeData.light().copyWith(
-  textTheme: ThemeData.light().textTheme.apply(fontFamily: 'OpenSans'),
-  primaryTextTheme:
-      ThemeData.light().primaryTextTheme.apply(fontFamily: 'OpenSans'),
+  textTheme: ThemeData.light().textTheme.apply(
+        fontFamily: 'OpenSans',
+        bodyColor: Colors.grey.shade900,
+        displayColor: Colors.grey.shade900,
+      ),
+  primaryTextTheme: ThemeData.light().primaryTextTheme.apply(
+        fontFamily: 'OpenSans',
+        bodyColor: Colors.grey.shade900,
+        displayColor: Colors.grey.shade900,
+      ),
+  scaffoldBackgroundColor: Color(0xFFFDFDFD),
+  appBarTheme: AppBarTheme(
+    backgroundColor: Color(0xFFFDFDFD),
+    foregroundColor: Colors.black,
+  ),
 );
 
 /// Available app themes

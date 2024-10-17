@@ -15,6 +15,22 @@ class HomeView extends StatelessWidget {
     required this.preferences,
   });
 
+  void shareVCard(BuildContext context) async {
+    final box = context.findRenderObject() as RenderBox?; // Required for iPad
+    final professionalContactText =
+        '${'title'.tr()} - ${VCardParser().parse(preferences.getString('vCard') ?? '').formattedName}';
+    final tempDir = await getTemporaryDirectory();
+    final file = File('${tempDir.path}/contact.vcf');
+    await file.writeAsString(preferences.getString('vCard') ?? '');
+    await Share.shareXFiles(
+      [XFile(file.path, mimeType: 'text/vcard')],
+      subject: professionalContactText,
+      sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+      // text: professionalContactText, // Not being used since it doesn't work on WhatsApp
+    );
+    await file.delete();
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -42,20 +58,7 @@ class HomeView extends StatelessWidget {
           ),
           child: IconButton(
             onPressed: () async {
-              final box =
-                  context.findRenderObject() as RenderBox?; // Required for iPad
-              final professionalContactText =
-                  '${'title'.tr()} - ${VCardParser().parse(preferences.getString('vCard') ?? '').formattedName}';
-              final tempDir = await getTemporaryDirectory();
-              final file = File('${tempDir.path}/contact.vcf');
-              await file.writeAsString(preferences.getString('vCard') ?? '');
-              await Share.shareXFiles(
-                [XFile(file.path, mimeType: 'text/vcard')],
-                subject: professionalContactText,
-                sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
-                // text: professionalContactText, // Not being used since it doesn't work on WhatsApp
-              );
-              await file.delete();
+              shareVCard(context);
             },
             icon: Icon(Icons.share_outlined),
           ),
