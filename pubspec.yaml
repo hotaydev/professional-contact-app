@@ -1,7 +1,7 @@
 name: professional_contact
 description: "Share your professional contact easily with NFC and QR Code."
 publish_to: "none"
-version: 1.0.0+1
+version: 0.1.0+1
 homepage: https://github.com/hotaydev/professional-contact-nfc
 repository: https://github.com/hotaydev/professional-contact-nfc.git
 issue_tracker: https://github.com/hotaydev/professional-contact-nfc/issues
@@ -10,7 +10,7 @@ environment:
   sdk: ^3.5.3
 
 dependencies:
-  easy_localization: ^3.0.7 # To reduce the final bundle size we could change this dependency by `flutter_localizations`, since it's only a wrapper to it makig it simpler.
+  easy_localization: ^3.0.7
   flutter:
     sdk: flutter
   nfc_manager: ^3.5.0

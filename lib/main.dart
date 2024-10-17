@@ -1,36 +1,30 @@
-import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-// import 'package:professional_contact/helpers/error_handler.dart';
 import 'package:professional_contact/widgets/layout.dart';
 import 'package:professional_contact/helpers/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
-  runZonedGuarded(() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    await EasyLocalization.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
 
-    runApp(
-      ChangeNotifierProvider(
-        create: (context) => ThemeHelper(),
-        child: EasyLocalization(
-          useOnlyLangCode: true,
-          supportedLocales: const [
-            Locale('en'),
-            Locale('pt'),
-          ],
-          path: 'assets/translations',
-          fallbackLocale: const Locale('pt'),
-          useFallbackTranslations: true,
-          child: const MyApp(),
-        ),
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeHelper(),
+      child: EasyLocalization(
+        useOnlyLangCode: true,
+        supportedLocales: const [
+          Locale('en'),
+          Locale('pt'),
+        ],
+        path: 'assets/translations',
+        fallbackLocale: const Locale('pt'),
+        useFallbackTranslations: true,
+        child: const MyApp(),
       ),
-    );
-  }, (exception, stackTrace) async {
-    // await ErrorHandler(exception, stackTrace).capture();
-  });
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
