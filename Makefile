@@ -1,11 +1,11 @@
 apk:
-	flutter build apk --release
+	flutter build apk --release --tree-shake-icons
 
 appbundle:
-	flutter build appbundle --release
+	flutter build appbundle --release --tree-shake-icons
 
 analyze:
-	flutter build appbundle --target-platform android-arm64 --analyze-size
+	flutter build appbundle --target-platform android-arm64 --tree-shake-icons --analyze-size
 
 clean:
 	flutter clean
