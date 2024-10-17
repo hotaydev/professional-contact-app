@@ -18,10 +18,13 @@ class SettingsView extends StatefulWidget {
 
 class _SettingsViewState extends State<SettingsView> {
   bool haveNfcAvailable = true;
+  // bool allowSendingExceptions = true;
 
   @override
   void initState() {
     haveNfcAvailable = widget.preferences.getBool('withNfc') ?? true;
+    // allowSendingExceptions =
+    //     widget.preferences.getBool('shareExceptions') ?? true;
     super.initState();
   }
 
@@ -136,6 +139,21 @@ class _SettingsViewState extends State<SettingsView> {
               ),
               Divider(),
 
+              // SwitchListTile(
+              //   title: Text('Allow error reports'),
+              //   subtitle: Text(
+              //       'Allow sending error reports to developers to enhance the app.'),
+              //   value: allowSendingExceptions,
+              //   activeColor: Colors.blue.shade500,
+              //   onChanged: (value) {
+              //     setState(() {
+              //       allowSendingExceptions = value;
+              //     });
+              //     widget.preferences.setBool('shareExceptions', value);
+              //   },
+              // ),
+              // Divider(),
+
               ListTile(
                 leading: Icon(Icons.article_outlined),
                 title: Text('settings.licenses'.tr()),
@@ -148,9 +166,10 @@ class _SettingsViewState extends State<SettingsView> {
               ListTile(
                 leading: Icon(Icons.code),
                 title: Text('settings.github'.tr()),
-                onTap: () {
-                  UrlHelper().open(
-                      'https://github.com/hotaydev/professional-contact-nfc');
+                onTap: () async {
+                  await UrlHelper(
+                          'https://github.com/hotaydev/professional-contact-nfc')
+                      .open();
                 },
               ),
               Divider(),
@@ -179,8 +198,8 @@ class _SettingsViewState extends State<SettingsView> {
                   ),
                   SizedBox(width: 8),
                   GestureDetector(
-                    onTap: () {
-                      UrlHelper().open('https://www.hotay.dev');
+                    onTap: () async {
+                      await UrlHelper('https://www.hotay.dev').open();
                     },
                     child: Image.asset(
                       "assets/images/logo-${Provider.of<ThemeHelper>(context).getTheme() == ThemeType.light ? "dark" : "light"}.png",
@@ -194,8 +213,8 @@ class _SettingsViewState extends State<SettingsView> {
                 textAlign: TextAlign.center,
               ),
               GestureDetector(
-                onTap: () {
-                  UrlHelper().open('https://go.hotay.dev/orcamento');
+                onTap: () async {
+                  await UrlHelper('https://go.hotay.dev/orcamento').open();
                 },
                 child: Text(
                   'settings.hotay.contact'.tr(),
