@@ -5,28 +5,10 @@ import 'package:professional_contact/helpers/urls.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SettingsView extends StatefulWidget {
+class SettingsView extends StatelessWidget {
   final SharedPreferences preferences;
-  const SettingsView({
-    super.key,
-    required this.preferences,
-  });
 
-  @override
-  State<SettingsView> createState() => _SettingsViewState();
-}
-
-class _SettingsViewState extends State<SettingsView> {
-  bool haveNfcAvailable = true;
-  // bool allowSendingExceptions = true;
-
-  @override
-  void initState() {
-    haveNfcAvailable = widget.preferences.getBool('withNfc') ?? true;
-    // allowSendingExceptions =
-    //     widget.preferences.getBool('shareExceptions') ?? true;
-    super.initState();
-  }
+  const SettingsView({super.key, required this.preferences});
 
   @override
   Widget build(BuildContext context) {
@@ -46,114 +28,12 @@ class _SettingsViewState extends State<SettingsView> {
                 ),
               ),
               SizedBox(height: screenHeight * 0.03),
-
-              ListTile(
-                title: Text('settings.theme.title'.tr()),
-                subtitle: Text('settings.theme.subtitle'.tr()),
-                trailing: DropdownButton<String>(
-                  dropdownColor: Theme.of(context).scaffoldBackgroundColor,
-                  value: Provider.of<ThemeHelper>(context, listen: false)
-                              .getTheme() ==
-                          ThemeType.light
-                      ? 'Light'
-                      : 'Dark',
-                  items: [
-                    DropdownMenuItem(
-                      value: 'Light',
-                      child: Text('settings.theme.light'.tr()),
-                    ),
-                    DropdownMenuItem(
-                      value: 'Dark',
-                      child: Text('settings.theme.dark'.tr()),
-                    ),
-                  ],
-                  onChanged: (value) async {
-                    ThemeType currentTheme =
-                        Provider.of<ThemeHelper>(context, listen: false)
-                            .getTheme();
-
-                    if (value == 'Light' && currentTheme == ThemeType.dark) {
-                      Provider.of<ThemeHelper>(context, listen: false)
-                          .toggleTheme();
-
-                      widget.preferences.setBool('isLightTheme', true);
-                    } else if (value == 'Dark' &&
-                        currentTheme == ThemeType.light) {
-                      Provider.of<ThemeHelper>(context, listen: false)
-                          .toggleTheme();
-
-                      widget.preferences.setBool('isLightTheme', false);
-                    }
-                  },
-                ),
-              ),
+              ThemeSelector(preferences: preferences),
               Divider(),
-
-              SwitchListTile(
-                title: Text('settings.nfc.title'.tr()),
-                subtitle: Text('settings.nfc.subtitle'.tr()),
-                value: haveNfcAvailable,
-                activeColor: Colors.blue.shade500,
-                onChanged: (value) async {
-                  setState(() {
-                    haveNfcAvailable = value;
-                  });
-                  widget.preferences.setBool('withNfc', value);
-                },
-              ),
+              NfcToggle(preferences: preferences),
               Divider(),
-
-              ListTile(
-                title: Text('settings.language.title'.tr()),
-                subtitle: Text('settings.language.subtitle'.tr()),
-                trailing: DropdownButton<String>(
-                  dropdownColor: Theme.of(context).scaffoldBackgroundColor,
-                  value: switch (context.locale.languageCode) {
-                    'en' => 'English',
-                    'pt' => 'Portuguese',
-                    String() => 'Portuguese',
-                  },
-                  items: [
-                    DropdownMenuItem(
-                      value: 'English',
-                      child: Text('settings.language.options.english'.tr()),
-                    ),
-                    DropdownMenuItem(
-                      value: 'Portuguese',
-                      child: Text('settings.language.options.portuguese'.tr()),
-                    ),
-                  ],
-                  onChanged: (value) async {
-                    switch (value) {
-                      case 'English':
-                        context.setLocale(Locale('en'));
-                        break;
-                      case 'Portuguese':
-                        context.setLocale(Locale('pt'));
-                        break;
-                      default:
-                        break;
-                    }
-                  },
-                ),
-              ),
+              LanguageSelector(),
               Divider(),
-
-              // SwitchListTile(
-              //   title: Text('Allow error reports'),
-              //   subtitle: Text(
-              //       'Allow sending error reports to developers to enhance the app.'),
-              //   value: allowSendingExceptions,
-              //   activeColor: Colors.blue.shade500,
-              //   onChanged: (value) {
-              //     setState(() {
-              //       allowSendingExceptions = value;
-              //     });
-              //     widget.preferences.setBool('shareExceptions', value);
-              //   },
-              // ),
-              // Divider(),
-
               ListTile(
                 leading: Icon(Icons.article_outlined),
                 title: Text('settings.licenses'.tr()),
@@ -162,7 +42,6 @@ class _SettingsViewState extends State<SettingsView> {
                 },
               ),
               Divider(),
-
               ListTile(
                 leading: Icon(Icons.code),
                 title: Text('settings.github'.tr()),
@@ -173,7 +52,6 @@ class _SettingsViewState extends State<SettingsView> {
                 },
               ),
               Divider(),
-
               // Add Play Store link
               // ListTile(
               //   leading: Icon(Icons.star_outline),
@@ -226,8 +104,110 @@ class _SettingsViewState extends State<SettingsView> {
               ),
             ],
           ),
-        )
+        ),
+        // Add footer or any other static widgets here
       ],
+    );
+  }
+}
+
+class ThemeSelector extends StatelessWidget {
+  final SharedPreferences preferences;
+
+  const ThemeSelector({super.key, required this.preferences});
+
+  @override
+  Widget build(BuildContext context) {
+    String themeValue =
+        Provider.of<ThemeHelper>(context).getTheme() == ThemeType.light
+            ? 'Light'
+            : 'Dark';
+
+    return ListTile(
+      title: Text('settings.theme.title'.tr()),
+      subtitle: Text('settings.theme.subtitle'.tr()),
+      trailing: DropdownButton<String>(
+        dropdownColor: Theme.of(context).scaffoldBackgroundColor,
+        value: themeValue,
+        items: [
+          DropdownMenuItem(
+              value: 'Light', child: Text('settings.theme.light'.tr())),
+          DropdownMenuItem(
+              value: 'Dark', child: Text('settings.theme.dark'.tr())),
+        ],
+        onChanged: (value) async {
+          if (value != themeValue) {
+            Provider.of<ThemeHelper>(context, listen: false).toggleTheme();
+            preferences.setBool('isLightTheme', value == 'Light');
+          }
+        },
+      ),
+    );
+  }
+}
+
+class NfcToggle extends StatefulWidget {
+  final SharedPreferences preferences;
+
+  const NfcToggle({super.key, required this.preferences});
+
+  @override
+  State<NfcToggle> createState() => _NfcToggleState();
+}
+
+class _NfcToggleState extends State<NfcToggle> {
+  late bool haveNfcAvailable;
+
+  @override
+  void initState() {
+    super.initState();
+    haveNfcAvailable = widget.preferences.getBool('withNfc') ?? true;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SwitchListTile(
+      title: Text('settings.nfc.title'.tr()),
+      subtitle: Text('settings.nfc.subtitle'.tr()),
+      activeColor: Colors.blue.shade500,
+      value: haveNfcAvailable,
+      onChanged: (value) {
+        setState(() {
+          haveNfcAvailable = value;
+        });
+        widget.preferences.setBool('withNfc', value);
+      },
+    );
+  }
+}
+
+class LanguageSelector extends StatelessWidget {
+  const LanguageSelector({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    String languageValue =
+        context.locale.languageCode == 'en' ? 'English' : 'Portuguese';
+
+    return ListTile(
+      title: Text('settings.language.title'.tr()),
+      subtitle: Text('settings.language.subtitle'.tr()),
+      trailing: DropdownButton<String>(
+        dropdownColor: Theme.of(context).scaffoldBackgroundColor,
+        value: languageValue,
+        items: [
+          DropdownMenuItem(
+              value: 'English',
+              child: Text('settings.language.options.english'.tr())),
+          DropdownMenuItem(
+              value: 'Portuguese',
+              child: Text('settings.language.options.portuguese'.tr())),
+        ],
+        onChanged: (value) {
+          Locale locale = value == 'English' ? Locale('en') : Locale('pt');
+          context.setLocale(locale);
+        },
+      ),
     );
   }
 }
