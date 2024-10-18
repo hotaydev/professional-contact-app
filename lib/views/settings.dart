@@ -48,9 +48,12 @@ class SettingsView extends StatelessWidget {
                 leading: Icon(Icons.code),
                 title: Text('settings.github'.tr()),
                 onTap: () async {
-                  await UrlHelper(
-                          'https://github.com/hotaydev/professional-contact-nfc')
-                      .open();
+                  const String url = String.fromEnvironment(
+                    'GITHUB_REPO_URL',
+                    defaultValue:
+                        'https://github.com/hotaydev/professional-contact-nfc',
+                  );
+                  await UrlHelper(url).open();
                 },
               ),
               Divider(),
@@ -79,7 +82,11 @@ class SettingsView extends StatelessWidget {
                   SizedBox(width: 8),
                   GestureDetector(
                     onTap: () async {
-                      await UrlHelper('https://www.hotay.dev').open();
+                      const String url = String.fromEnvironment(
+                        'DEVELOPER_WEBSITE',
+                        defaultValue: 'https://www.hotay.dev',
+                      );
+                      await UrlHelper(url).open();
                     },
                     child: Image.asset(
                       "assets/images/logo-${Provider.of<ThemeHelper>(context).getTheme() == ThemeType.light ? "dark" : "light"}.png",
@@ -94,7 +101,11 @@ class SettingsView extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () async {
-                  await UrlHelper('https://go.hotay.dev/orcamento').open();
+                  const String url = String.fromEnvironment(
+                    'DEVELOPER_CONTACT',
+                    defaultValue: 'https://go.hotay.dev/orcamento',
+                  );
+                  await UrlHelper(url).open();
                 },
                 child: Text(
                   'settings.hotay.contact'.tr(),
@@ -133,9 +144,13 @@ class ThemeSelector extends StatelessWidget {
         value: themeValue,
         items: [
           DropdownMenuItem(
-              value: 'Light', child: Text('settings.theme.light'.tr())),
+            value: 'Light',
+            child: Text('settings.theme.light'.tr()),
+          ),
           DropdownMenuItem(
-              value: 'Dark', child: Text('settings.theme.dark'.tr())),
+            value: 'Dark',
+            child: Text('settings.theme.dark'.tr()),
+          ),
         ],
         onChanged: (value) async {
           if (value != themeValue) {

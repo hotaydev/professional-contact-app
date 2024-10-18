@@ -9,7 +9,7 @@
       "request": "launch",
       "type": "dart",
       "args": [
-        "--dart-define=ERRORS_LOGGER_ENDPOINT="
+        "--dart-define-from-file=variables.json"
       ]
     },
     {
