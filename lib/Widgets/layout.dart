@@ -1,11 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:professional_contact/helpers/theme.dart';
 import 'package:professional_contact/views/home.dart';
 import 'package:professional_contact/views/profile.dart';
 import 'package:professional_contact/views/settings.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum CurrentView { home, settings, profile }
@@ -39,15 +36,6 @@ class _PageLayoutState extends State<PageLayout> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 0,
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarIconBrightness:
-              Provider.of<ThemeHelper>(context, listen: false)
-                  .currentTheme
-                  .brightness,
-          statusBarBrightness: Provider.of<ThemeHelper>(context, listen: false)
-              .currentTheme
-              .brightness,
-        ),
       ),
       body: SafeArea(
         child: switch (currentView) {

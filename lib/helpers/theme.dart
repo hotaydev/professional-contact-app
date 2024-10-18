@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 /// App Dark Theme
 ThemeData darkTheme = ThemeData.dark().copyWith(
@@ -16,6 +17,7 @@ ThemeData darkTheme = ThemeData.dark().copyWith(
   appBarTheme: AppBarTheme(
     backgroundColor: Color(0xFF181818),
     foregroundColor: Colors.white,
+    systemOverlayStyle: SystemUiOverlayStyle.light,
   ),
 );
 
@@ -35,6 +37,7 @@ ThemeData lightTheme = ThemeData.light().copyWith(
   appBarTheme: AppBarTheme(
     backgroundColor: Color(0xFFFDFDFD),
     foregroundColor: Colors.black,
+    systemOverlayStyle: SystemUiOverlayStyle.dark,
   ),
 );
 

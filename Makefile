@@ -1,5 +1,5 @@
 apk:
-	flutter build apk --release --dart-define-from-file=variables.json --tree-shake-icons
+	flutter build apk --release --dart-define-from-file=variables.json --target-platform android-arm64 --tree-shake-icons
 
 appbundle:
 	flutter build appbundle --release --dart-define-from-file=variables.json --tree-shake-icons
