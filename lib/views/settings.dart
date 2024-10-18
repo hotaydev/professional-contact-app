@@ -32,6 +32,8 @@ class SettingsView extends StatelessWidget {
               Divider(),
               NfcToggle(preferences: preferences),
               Divider(),
+              ErrorTrackingReportToggle(preferences: preferences),
+              Divider(),
               LanguageSelector(),
               Divider(),
               ListTile(
@@ -176,6 +178,43 @@ class _NfcToggleState extends State<NfcToggle> {
           haveNfcAvailable = value;
         });
         widget.preferences.setBool('withNfc', value);
+      },
+    );
+  }
+}
+
+class ErrorTrackingReportToggle extends StatefulWidget {
+  final SharedPreferences preferences;
+
+  const ErrorTrackingReportToggle({super.key, required this.preferences});
+
+  @override
+  State<ErrorTrackingReportToggle> createState() =>
+      _ErrorTrackingReportToggleState();
+}
+
+class _ErrorTrackingReportToggleState extends State<ErrorTrackingReportToggle> {
+  late bool errorTrackingEnabled;
+
+  @override
+  void initState() {
+    super.initState();
+    errorTrackingEnabled =
+        widget.preferences.getBool('shareExceptions') ?? true;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SwitchListTile(
+      title: Text('settings.errorTrack.title'.tr()),
+      subtitle: Text('settings.errorTrack.subtitle'.tr()),
+      activeColor: Colors.blue.shade500,
+      value: errorTrackingEnabled,
+      onChanged: (value) {
+        setState(() {
+          errorTrackingEnabled = value;
+        });
+        widget.preferences.setBool('shareExceptions', value);
       },
     );
   }

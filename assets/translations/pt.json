@@ -22,6 +22,10 @@
       "title": "Dispositivo com NFC",
       "subtitle": "Desative isso se o seu dispositivo não tiver NFC para ocultar avisos"
     },
+    "errorTrack": {
+      "title": "Enviar Erros",
+      "subtitle": "Compartilhe relatórios de erros para nos ajudar a melhorar o aplicativo"
+    },
     "language": {
       "title": "Idioma",
       "subtitle": "Alterar entre idiomas",

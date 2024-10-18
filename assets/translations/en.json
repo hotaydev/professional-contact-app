@@ -22,6 +22,10 @@
       "title": "Device with NFC",
       "subtitle": "Disable this if your device doesn't have NFC to hide warnings"
     },
+    "errorTrack": {
+      "title": "Send Errors",
+      "subtitle": "Share bug reports to help us improve the app."
+    },
     "language": {
       "title": "Language",
       "subtitle": "Change between languages",
