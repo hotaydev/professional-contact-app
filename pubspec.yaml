@@ -10,10 +10,13 @@ environment:
   sdk: ^3.5.3
 
 dependencies:
+  device_info_plus: ^11.1.0
   easy_localization: ^3.0.7
   flutter:
     sdk: flutter
+  http: ^1.2.2
   nfc_manager: ^3.5.0
+  package_info_plus: ^8.1.0
   path_provider: ^2.1.4
   provider: ^6.1.2
   qr_flutter: ^4.1.0

@@ -7,7 +7,10 @@
     {
       "name": "Run App",
       "request": "launch",
-      "type": "dart"
+      "type": "dart",
+      "args": [
+        "--dart-define=ERRORS_LOGGER_ENDPOINT="
+      ]
     },
     {
       "name": "Run App (profile mode)",

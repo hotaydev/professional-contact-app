@@ -8,7 +8,12 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
-  runZonedGuarded(() async {
+  FlutterError.onError = (FlutterErrorDetails details) async {
+    await ErrorHandler(details.exception, details.stack).capture();
+    FlutterError.presentError(details);
+  };
+
+  await runZonedGuarded(() async {
     WidgetsFlutterBinding.ensureInitialized();
     await EasyLocalization.ensureInitialized();
 
