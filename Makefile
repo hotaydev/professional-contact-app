@@ -1,14 +1,20 @@
 apk:
-	flutter build apk --release --dart-define-from-file=variables.json --target-platform android-arm64 --tree-shake-icons
+	flutter build apk --flavor free --release --dart-define-from-file=variables.json --tree-shake-icons
 
 appbundle:
-	flutter build appbundle --release --dart-define-from-file=variables.json --tree-shake-icons
+	flutter build appbundle --flavor free --release --dart-define-from-file=variables.json --tree-shake-icons
 
 analyze:
-	flutter build appbundle --target-platform android-arm64 --dart-define-from-file=variables.json --tree-shake-icons --analyze-size
+	flutter build appbundle --flavor free --target-platform android-arm64 --dart-define-from-file=variables.json --tree-shake-icons --analyze-size
 
 run:
-	flutter run --dart-define-from-file=variables.json
+	flutter run --flavor free --dart-define-from-file=variables.json
+
+premium_appbundle:
+	flutter build appbundle --release --flavor premium --dart-define-from-file=variables.json --tree-shake-icons
+
+premium_apk:
+	flutter build appbundle --release --flavor premium --dart-define-from-file=variables.json --tree-shake-icons
 
 clean:
 	flutter clean
