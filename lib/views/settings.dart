@@ -240,8 +240,12 @@ class LanguageSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String languageValue =
-        context.locale.languageCode == 'en' ? 'English' : 'Portuguese';
+    String languageValue = switch (context.locale.languageCode) {
+      'en' => 'English',
+      'pt' => 'Portuguese',
+      'es' => 'Spanish',
+      String() => 'English',
+    };
 
     return ListTile(
       title: Text('settings.language.title'.tr()),
@@ -256,9 +260,19 @@ class LanguageSelector extends StatelessWidget {
           DropdownMenuItem(
               value: 'Portuguese',
               child: Text('settings.language.options.portuguese'.tr())),
+          DropdownMenuItem(
+              value: 'Spanish',
+              child: Text('settings.language.options.spanish'.tr())),
         ],
         onChanged: (value) {
-          Locale locale = value == 'English' ? Locale('en') : Locale('pt');
+          Locale locale = switch (value) {
+            'English' => Locale('en'),
+            'Portuguese' => Locale('pt'),
+            'Spanish' => Locale('es'),
+            String() => Locale('en'),
+            null => Locale('en'),
+          };
+
           context.setLocale(locale);
         },
       ),

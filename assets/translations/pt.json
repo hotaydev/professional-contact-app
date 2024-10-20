@@ -31,7 +31,8 @@
       "subtitle": "Alterar entre idiomas",
       "options": {
         "portuguese": "Português",
-        "english": "Inglês"
+        "english": "Inglês",
+        "spanish": "Espanhol"
       }
     },
     "licenses": "Licenças",

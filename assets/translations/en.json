@@ -31,7 +31,8 @@
       "subtitle": "Change between languages",
       "options": {
         "portuguese": "Portuguese",
-        "english": "English"
+        "english": "English",
+        "spanish": "Spanish"
       }
     },
     "licenses": "Licenses",

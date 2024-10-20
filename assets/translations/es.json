@@ -1,0 +1,64 @@
+{
+  "title": "Contacto Profesional",
+  "getStarted": "Para comenzar, añade tu información\nen la pestaña \"perfil\".",
+  "nfc": {
+    "errorTransmitting": "¡Error al transferir datos vía NFC!",
+    "disabledOrNotSupported": "NFC desactivado o no soportado",
+    "sent": "ENVIADO"
+  },
+  "transferTypes": {
+    "qrCode": "Usar Código QR",
+    "nfc": "Usar NFC"
+  },
+  "settings": {
+    "title": "Configuraciones",
+    "theme": {
+      "title": "Tema",
+      "subtitle": "Cambia entre temas",
+      "light": "Claro",
+      "dark": "Oscuro"
+    },
+    "nfc": {
+      "title": "Dispositivo con NFC",
+      "subtitle": "Desactiva esto si tu dispositivo no tiene NFC para ocultar advertencias"
+    },
+    "errorTrack": {
+      "title": "Enviar Errores",
+      "subtitle": "Comparte informes de errores para ayudarnos a mejorar la aplicación."
+    },
+    "language": {
+      "title": "Idioma",
+      "subtitle": "Cambia entre idiomas",
+      "options": {
+        "portuguese": "Portugués",
+        "english": "Inglés",
+        "spanish": "Español"
+      }
+    },
+    "licenses": "Licencias",
+    "github": "Ver en GitHub",
+    "review": "Deja una Reseña",
+    "hotay": {
+      "createdBy": "Aplicación creada gratuitamente por",
+      "wantAnApp": "¿Quieres una aplicación o sistema para tu empresa?",
+      "contact": "¡Ponte en contacto!"
+    }
+  },
+  "profile": {
+    "title": "Completa tu información",
+    "subtitle": "Esta información se usará para generar tu tarjeta de contacto profesional. Todos los campos son opcionales.",
+    "save": "Guardar",
+    "saved": "¡Información Guardada!",
+    "opt": {
+      "firstName": "Nombre",
+      "middleName": "Segundo Nombre",
+      "lastName": "Apellido",
+      "org": "Organización",
+      "title": "Título / Rol",
+      "phone": "Número de Teléfono",
+      "email": "Correo Electrónico",
+      "url": "URL",
+      "notes": "Notas"
+    }
+  }
+}
