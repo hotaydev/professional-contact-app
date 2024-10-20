@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:professional_contact/helpers/premium.dart';
 import 'package:professional_contact/helpers/theme.dart';
 import 'package:professional_contact/helpers/urls.dart';
 import 'package:provider/provider.dart';
@@ -65,61 +66,79 @@ class SettingsView extends StatelessWidget {
               //     UrlHelper().open("");
               //   },
               // ),
+              // Add Premium version link
+              // if (VersionHelper().isNotPremium()) Divider(),
+              // if (VersionHelper().isNotPremium()) ListTile(
+              //   leading: Icon(Icons.verified_outlined),
+              //   title: Text('settings.premium'.tr()),
+              //   onTap: () {
+              //     UrlHelper('').open();
+              //   },
+              // ),
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
+        if (VersionHelper().isNotPremium()) DeveloperContactTile(),
+        // Add footer or any other static widgets here
+      ],
+    );
+  }
+}
+
+class DeveloperContactTile extends StatelessWidget {
+  const DeveloperContactTile({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'settings.hotay.createdBy'.tr(),
-                  ),
-                  SizedBox(width: 8),
-                  GestureDetector(
-                    onTap: () async {
-                      const String url = String.fromEnvironment(
-                        'DEVELOPER_WEBSITE',
-                        defaultValue: 'https://www.hotay.dev',
-                      );
-                      await UrlHelper(url).open();
-                    },
-                    child: Image.asset(
-                      "assets/images/logo-${Provider.of<ThemeHelper>(context).getTheme() == ThemeType.light ? "dark" : "light"}.png",
-                      width: 70,
-                    ),
-                  ),
-                ],
-              ),
               Text(
-                'settings.hotay.wantAnApp'.tr(),
-                textAlign: TextAlign.center,
+                'settings.hotay.createdBy'.tr(),
               ),
+              SizedBox(width: 8),
               GestureDetector(
                 onTap: () async {
                   const String url = String.fromEnvironment(
-                    'DEVELOPER_CONTACT',
-                    defaultValue: 'https://go.hotay.dev/orcamento',
+                    'DEVELOPER_WEBSITE',
+                    defaultValue: 'https://www.hotay.dev',
                   );
                   await UrlHelper(url).open();
                 },
-                child: Text(
-                  'settings.hotay.contact'.tr(),
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                child: Image.asset(
+                  "assets/images/logo-${Provider.of<ThemeHelper>(context).getTheme() == ThemeType.light ? "dark" : "light"}.png",
+                  width: 70,
                 ),
               ),
             ],
           ),
-        ),
-        // Add footer or any other static widgets here
-      ],
+          Text(
+            'settings.hotay.wantAnApp'.tr(),
+            textAlign: TextAlign.center,
+          ),
+          GestureDetector(
+            onTap: () async {
+              const String url = String.fromEnvironment(
+                'DEVELOPER_CONTACT',
+                defaultValue: 'https://go.hotay.dev/orcamento',
+              );
+              await UrlHelper(url).open();
+            },
+            child: Text(
+              'settings.hotay.contact'.tr(),
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
