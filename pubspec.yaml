@@ -10,6 +10,7 @@ environment:
   sdk: ^3.5.3
 
 dependencies:
+  cached_network_image: ^3.4.1
   device_info_plus: ^11.1.0
   easy_localization: ^3.0.7
   flutter:
@@ -37,6 +38,9 @@ flutter:
     - assets/translations/
     - assets/images/logo-dark.png
     - assets/images/logo-light.png
+    - assets/images/social/github.png
+    - assets/images/social/gravatar.png
+    - assets/images/social/mastodon.png
 
   fonts:
     - family: OpenSans

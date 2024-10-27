@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:professional_contact/helpers/theme.dart';
@@ -25,6 +26,7 @@ class _ProfileViewState extends State<ProfileView> {
   late VCard vCard;
   final _formKey = GlobalKey<FormState>();
   final Map<String, String> _formData = {};
+  final String? _profileImage = null;
 
   @override
   void initState() {
@@ -56,6 +58,63 @@ class _ProfileViewState extends State<ProfileView> {
         key: _formKey,
         child: Column(
           children: [
+            Stack(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    _chooseProfileImage(context);
+                  },
+                  child: CircleAvatar(
+                    radius: 50,
+                    backgroundColor: Colors.grey.shade300,
+                    child: _profileImage != null
+                        ? ClipOval(
+                            child: CachedNetworkImage(
+                              imageUrl: _profileImage,
+                              placeholder: (context, url) => Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                              errorWidget: (context, url, error) => Icon(
+                                Icons.error,
+                                size: 50,
+                                color: Colors.grey.shade700,
+                              ),
+                              fit: BoxFit.cover,
+                              width: 100,
+                              height: 100,
+                            ),
+                          )
+                        : Icon(
+                            Icons.person,
+                            size: 50,
+                            color: Colors.grey.shade700,
+                          ),
+                  ),
+                ),
+                Positioned(
+                  bottom: 4,
+                  right: 4,
+                  child: Container(
+                    width: 24,
+                    height: 24,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade100,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.grey.shade200,
+                        width: 1,
+                      ),
+                    ),
+                    child: Icon(
+                      Icons.edit,
+                      size: 16,
+                      color: Colors.grey.shade700,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
             Text(
               'profile.title'.tr(),
               style: Theme.of(context).textTheme.headlineSmall,
@@ -128,7 +187,6 @@ class _ProfileViewState extends State<ProfileView> {
                         ThemeType.light
                     ? Colors.blue.shade800
                     : Colors.blue.shade500,
-                // width: 2.0,
               ),
               borderRadius: BorderRadius.circular(8.0),
             ),
@@ -170,9 +228,9 @@ class _ProfileViewState extends State<ProfileView> {
 
       widget.preferences.setString('vCard', vCardString);
 
-      // Use the mounted property to check if the widget is still in the tree
       if (mounted) {
-        FocusManager.instance.primaryFocus?.unfocus(); // dismiss Keyboard
+        FocusManager.instance.primaryFocus
+            ?.unfocus(); // Ensure Keyboard dismissal
 
         widget.goToView(CurrentView.home);
 
@@ -198,5 +256,109 @@ class _ProfileViewState extends State<ProfileView> {
         );
       }
     }
+  }
+
+  Future<void> _chooseProfileImage(BuildContext context) async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Select Profile Image',
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+                SizedBox(height: 16),
+                _buildImageOption(
+                    context, 'Mastodon', 'assets/images/social/mastodon.png'),
+                _buildImageOption(
+                    context, 'GitHub', 'assets/images/social/github.png'),
+                _buildImageOption(
+                    context, 'Gravatar', 'assets/images/social/gravatar.png'),
+                _buildImageOption(context, 'Use by URL', ''),
+                SizedBox(height: 16),
+                Text(
+                  'We use images over the internet, so any URL would work.',
+                  style: Theme.of(context).textTheme.bodySmall,
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildImageOption(
+      BuildContext context, String label, String imagePath) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: TextButton(
+        style: TextButton.styleFrom(
+          backgroundColor:
+              Provider.of<ThemeHelper>(context, listen: false).getTheme() ==
+                      ThemeType.light
+                  ? Colors.blue.shade50
+                  : Colors.blue.shade500.withOpacity(0.2),
+          side: BorderSide(color: Colors.blue),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          overlayColor: Colors.blue,
+        ),
+        onPressed: () {},
+        child: Row(
+          children: [
+            Container(
+              width: 30,
+              height: 30,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.blue.shade800.withOpacity(0.2),
+                    blurRadius: 8.0,
+                    spreadRadius: 2.0,
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(6),
+                child: (imagePath.isNotEmpty)
+                    ? ClipOval(
+                        child: Image.asset(
+                          imagePath,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : Center(
+                        child: Icon(
+                          Icons.link,
+                          color: Colors.blue,
+                          size: 18,
+                        ),
+                      ),
+              ),
+            ),
+            Spacer(),
+            Text(
+              label,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.blue,
+              ),
+            ),
+            Spacer(),
+            SizedBox(width: 30),
+          ],
+        ),
+      ),
+    );
   }
 }
