@@ -46,6 +46,12 @@ class _ProfileViewState extends State<ProfileView> {
     _formData['profile.opt.email'] = vCard.email ?? '';
     _formData['profile.opt.url'] = vCard.url ?? '';
     _formData['profile.opt.notes'] = vCard.note ?? '';
+
+    if ((vCard.photo ?? '').isNotEmpty) {
+      setState(() {
+        _profileImage = vCard.photo;
+      });
+    }
   }
 
   Future<void> setImage(
@@ -78,8 +84,6 @@ class _ProfileViewState extends State<ProfileView> {
         final responseData = jsonDecode(response.body);
 
         if (responseData['success'] == true && responseData['photo'] != null) {
-          print("Photo URL: ${responseData['photo']}");
-
           setState(() {
             _profileImage = responseData['photo'];
           });
@@ -272,6 +276,7 @@ class _ProfileViewState extends State<ProfileView> {
       vCard.email = _formData['profile.opt.email'];
       vCard.url = _formData['profile.opt.url'];
       vCard.note = _formData['profile.opt.notes'];
+      vCard.photo = _profileImage;
 
       String vCardString = vCard.getFormattedString();
 

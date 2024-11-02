@@ -55,6 +55,11 @@ class VCardFormatter {
       formattedVCardString += 'NOTE:${e(vCard.note ?? '')}${nl()}';
     }
 
+    if ((vCard.photo ?? '').isNotEmpty) {
+      formattedVCardString +=
+          'PHOTO;TYPE=JPEG;VALUE=URI:${e(vCard.photo ?? '')}${nl()}';
+    }
+
     formattedVCardString += 'END:VCARD${nl()}';
     return formattedVCardString;
   }

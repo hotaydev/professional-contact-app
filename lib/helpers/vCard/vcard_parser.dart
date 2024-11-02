@@ -40,6 +40,8 @@ class VCardParser {
         vCard.url = decode(line.substring(4));
       } else if (line.startsWith('NOTE:')) {
         vCard.note = decode(line.substring(5));
+      } else if (line.startsWith('PHOTO;TYPE=JPEG;VALUE=URI:')) {
+        vCard.photo = decode(line.substring(26));
       }
     }
 
