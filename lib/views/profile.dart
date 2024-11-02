@@ -8,6 +8,8 @@ import 'package:professional_contact/helpers/vCard/vcard_parser.dart';
 import 'package:professional_contact/widgets/layout.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class ProfileView extends StatefulWidget {
   final Function goToView;
@@ -46,11 +48,50 @@ class _ProfileViewState extends State<ProfileView> {
     _formData['profile.opt.notes'] = vCard.note ?? '';
   }
 
-  void setImage(String image, String socialMedia) {
-    print(image);
-    // setState(() {
-    //   _profileImage = image;
-    // });
+  Future<void> setImage(
+      String userAccountOrImageUrl, String socialMedia) async {
+    final socialMediaLowercase = socialMedia.toLowerCase();
+
+    if (socialMediaLowercase == 'network url') {
+      // TODO: check if it's a real image URL
+      setState(() {
+        _profileImage = userAccountOrImageUrl;
+      });
+      return;
+    }
+    final String apiUrl = const String.fromEnvironment(
+        'PROFILE_IMAGE_API'); // Ensure your env setup includes this
+
+    final Map<String, String> body = {
+      'account_type': socialMediaLowercase,
+      'identifier': userAccountOrImageUrl
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(body),
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+
+        if (responseData['success'] == true && responseData['photo'] != null) {
+          print("Photo URL: ${responseData['photo']}");
+
+          setState(() {
+            _profileImage = responseData['photo'];
+          });
+        } else {
+          print("Failed to retrieve photo: ${responseData['error']}");
+        }
+      } else {
+        print('Failed to retrieve photo, status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error occurred: $error');
+    }
   }
 
   @override
@@ -266,8 +307,10 @@ class _ProfileViewState extends State<ProfileView> {
     }
   }
 
-  Future<void> _chooseProfileImageIfPremiumApp(BuildContext context,
-      void Function(String image, String socialImage) setImage) async {
+  Future<void> _chooseProfileImageIfPremiumApp(
+      BuildContext context,
+      Future<void> Function(String userAccountOrImageUrl, String socialImage)
+          setImage) async {
     bool isPremium = VersionHelper().isPremium();
 
     if (isPremium) {
@@ -342,8 +385,10 @@ class _ProfileViewState extends State<ProfileView> {
     );
   }
 
-  Future<void> _chooseProfileImage(BuildContext context,
-      void Function(String image, String socialImage) setImage) async {
+  Future<void> _chooseProfileImage(
+      BuildContext context,
+      Future<void> Function(String userAccountOrImageUrl, String socialImage)
+          setImage) async {
     await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -386,7 +431,8 @@ class _ProfileViewState extends State<ProfileView> {
     BuildContext context,
     String image,
     String socialMedia,
-    void Function(String image, String socialImage) setImage,
+    Future<void> Function(String userAccountOrImageUrl, String socialImage)
+        setImage,
   ) async {
     await showDialog(
       context: context,
@@ -400,8 +446,12 @@ class _ProfileViewState extends State<ProfileView> {
     );
   }
 
-  Widget _buildImageOption(BuildContext context, String label, String imagePath,
-      void Function(String image, String socialImage) setImage) {
+  Widget _buildImageOption(
+      BuildContext context,
+      String label,
+      String imagePath,
+      Future<void> Function(String userAccountOrImageUrl, String socialImage)
+          setImage) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: TextButton(
@@ -472,7 +522,8 @@ class _ProfileViewState extends State<ProfileView> {
 class SocialMediaImageDialog extends StatefulWidget {
   final String image;
   final String socialMedia;
-  final void Function(String image, String socialImage) setImage;
+  final Future<void> Function(String userAccountOrImageUrl, String socialImage)
+      setImage;
 
   const SocialMediaImageDialog({
     super.key,
@@ -599,9 +650,12 @@ class _SocialMediaImageDialogState extends State<SocialMediaImageDialog> {
             ),
             SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () {
-                widget.setImage(_textController.text, widget.socialMedia);
-                Navigator.of(context).pop();
+              onPressed: () async {
+                // TODO: add loading animation in the button
+                await widget.setImage(_textController.text, widget.socialMedia);
+                if (mounted) {
+                  Navigator.of(context).pop();
+                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
