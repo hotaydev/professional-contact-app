@@ -27,7 +27,7 @@ class _ProfileViewState extends State<ProfileView> {
   late VCard vCard;
   final _formKey = GlobalKey<FormState>();
   final Map<String, String> _formData = {};
-  final String? _profileImage = null;
+  String? _profileImage;
 
   @override
   void initState() {
@@ -44,6 +44,13 @@ class _ProfileViewState extends State<ProfileView> {
     _formData['profile.opt.email'] = vCard.email ?? '';
     _formData['profile.opt.url'] = vCard.url ?? '';
     _formData['profile.opt.notes'] = vCard.note ?? '';
+  }
+
+  void setImage(String image, String socialMedia) {
+    print(image);
+    // setState(() {
+    //   _profileImage = image;
+    // });
   }
 
   @override
@@ -63,7 +70,7 @@ class _ProfileViewState extends State<ProfileView> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    _chooseProfileImageIfPremiumApp(context);
+                    _chooseProfileImageIfPremiumApp(context, setImage);
                   },
                   child: CircleAvatar(
                     radius: 50,
@@ -71,7 +78,7 @@ class _ProfileViewState extends State<ProfileView> {
                     child: _profileImage != null
                         ? ClipOval(
                             child: CachedNetworkImage(
-                              imageUrl: _profileImage,
+                              imageUrl: _profileImage!,
                               placeholder: (context, url) => Center(
                                 child: CircularProgressIndicator(),
                               ),
@@ -259,11 +266,12 @@ class _ProfileViewState extends State<ProfileView> {
     }
   }
 
-  Future<void> _chooseProfileImageIfPremiumApp(BuildContext context) async {
+  Future<void> _chooseProfileImageIfPremiumApp(BuildContext context,
+      void Function(String image, String socialImage) setImage) async {
     bool isPremium = VersionHelper().isPremium();
 
     if (isPremium) {
-      _chooseProfileImage(context);
+      _chooseProfileImage(context, setImage);
     } else {
       _upgradeToUseWarning(context);
     }
@@ -334,7 +342,8 @@ class _ProfileViewState extends State<ProfileView> {
     );
   }
 
-  Future<void> _chooseProfileImage(BuildContext context) async {
+  Future<void> _chooseProfileImage(BuildContext context,
+      void Function(String image, String socialImage) setImage) async {
     await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -352,13 +361,13 @@ class _ProfileViewState extends State<ProfileView> {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 16),
-                _buildImageOption(
-                    context, 'Mastodon', 'assets/images/social/mastodon.png'),
-                _buildImageOption(
-                    context, 'GitHub', 'assets/images/social/github.png'),
-                _buildImageOption(
-                    context, 'Gravatar', 'assets/images/social/gravatar.png'),
-                _buildImageOption(context, 'Network URL', ''),
+                _buildImageOption(context, 'Mastodon',
+                    'assets/images/social/mastodon.png', setImage),
+                _buildImageOption(context, 'GitHub',
+                    'assets/images/social/github.png', setImage),
+                _buildImageOption(context, 'Gravatar',
+                    'assets/images/social/gravatar.png', setImage),
+                _buildImageOption(context, 'Network URL', '', setImage),
                 SizedBox(height: 16),
                 Text(
                   'We use images over the internet, so any URL would work.',
@@ -374,144 +383,25 @@ class _ProfileViewState extends State<ProfileView> {
   }
 
   Future<void> _getImageFromSocialMedia(
-      BuildContext context, String image, String socialMedia) async {
+    BuildContext context,
+    String image,
+    String socialMedia,
+    void Function(String image, String socialImage) setImage,
+  ) async {
     await showDialog(
       context: context,
       builder: (BuildContext context) {
-        return Dialog(
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.blue.shade800.withOpacity(0.2),
-                        blurRadius: 8.0,
-                        spreadRadius: 2.0,
-                      ),
-                    ],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(6),
-                    child: (image.isNotEmpty)
-                        ? ClipOval(
-                            child: Image.asset(
-                              image,
-                              fit: BoxFit.cover,
-                            ),
-                          )
-                        : Center(
-                            child: Icon(
-                              Icons.link,
-                              color: Colors.blue,
-                              size: 18,
-                            ),
-                          ),
-                  ),
-                ),
-                SizedBox(height: 16),
-                Text(
-                  'Get image from $socialMedia',
-                  style: Theme.of(context).textTheme.headlineSmall,
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 16),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: TextFormField(
-                    initialValue: '',
-                    decoration: InputDecoration(
-                      labelText: image.isNotEmpty
-                          ? 'Account or Username'
-                          : 'URL of the image',
-                      floatingLabelStyle: WidgetStateTextStyle.resolveWith(
-                        (Set<WidgetState> states) {
-                          if (states.contains(WidgetState.focused)) {
-                            return TextStyle(
-                              color: Provider.of<ThemeHelper>(context,
-                                              listen: false)
-                                          .getTheme() ==
-                                      ThemeType.light
-                                  ? Colors.blue.shade800
-                                  : Colors.blue.shade500,
-                            );
-                          }
-                          return TextStyle();
-                        },
-                      ),
-                      labelStyle: TextStyle(
-                        color: Theme.of(context).textTheme.bodyMedium?.color,
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color:
-                              Provider.of<ThemeHelper>(context, listen: false)
-                                          .getTheme() ==
-                                      ThemeType.light
-                                  ? Colors.blue.shade800
-                                  : Colors.blue.shade500,
-                        ),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color:
-                              Provider.of<ThemeHelper>(context, listen: false)
-                                          .getTheme() ==
-                                      ThemeType.light
-                                  ? Colors.blue.shade800
-                                  : Colors.blue.shade500,
-                        ),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                    onSaved: (value) {
-                      // TODO: Save URL
-                    },
-                  ),
-                ),
-                SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-                    elevation: 5,
-                  ),
-                  child: Text(
-                    'Use this image',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 16),
-              ],
-            ),
-          ),
+        return SocialMediaImageDialog(
+          image: image,
+          socialMedia: socialMedia,
+          setImage: setImage,
         );
       },
     );
   }
 
-  Widget _buildImageOption(
-      BuildContext context, String label, String imagePath) {
+  Widget _buildImageOption(BuildContext context, String label, String imagePath,
+      void Function(String image, String socialImage) setImage) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: TextButton(
@@ -526,7 +416,7 @@ class _ProfileViewState extends State<ProfileView> {
           overlayColor: Colors.blue,
         ),
         onPressed: () async {
-          await _getImageFromSocialMedia(context, imagePath, label);
+          await _getImageFromSocialMedia(context, imagePath, label, setImage);
         },
         child: Row(
           children: [
@@ -572,6 +462,165 @@ class _ProfileViewState extends State<ProfileView> {
             ),
             Spacer(),
             SizedBox(width: 30),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SocialMediaImageDialog extends StatefulWidget {
+  final String image;
+  final String socialMedia;
+  final void Function(String image, String socialImage) setImage;
+
+  const SocialMediaImageDialog({
+    super.key,
+    required this.image,
+    required this.socialMedia,
+    required this.setImage,
+  });
+  @override
+  State<SocialMediaImageDialog> createState() => _SocialMediaImageDialogState();
+}
+
+class _SocialMediaImageDialogState extends State<SocialMediaImageDialog> {
+  late TextEditingController _textController;
+
+  @override
+  void initState() {
+    super.initState();
+    _textController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.blue.shade800.withOpacity(0.2),
+                    blurRadius: 8.0,
+                    spreadRadius: 2.0,
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(6),
+                child: (widget.image.isNotEmpty)
+                    ? ClipOval(
+                        child: Image.asset(
+                          widget.image,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : Center(
+                        child: Icon(
+                          Icons.link,
+                          color: Colors.blue,
+                          size: 18,
+                        ),
+                      ),
+              ),
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Get image from ${widget.socialMedia}',
+              style: Theme.of(context).textTheme.headlineSmall,
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: TextFormField(
+                controller: _textController,
+                decoration: InputDecoration(
+                  labelText: widget.image.isNotEmpty
+                      ? 'Account or Username'
+                      : 'URL of the image',
+                  floatingLabelStyle: WidgetStateTextStyle.resolveWith(
+                    (Set<WidgetState> states) {
+                      if (states.contains(WidgetState.focused)) {
+                        return TextStyle(
+                          color:
+                              Provider.of<ThemeHelper>(context, listen: false)
+                                          .getTheme() ==
+                                      ThemeType.light
+                                  ? Colors.blue.shade800
+                                  : Colors.blue.shade500,
+                        );
+                      }
+                      return TextStyle();
+                    },
+                  ),
+                  labelStyle: TextStyle(
+                    color: Theme.of(context).textTheme.bodyMedium?.color,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Provider.of<ThemeHelper>(context, listen: false)
+                                  .getTheme() ==
+                              ThemeType.light
+                          ? Colors.blue.shade800
+                          : Colors.blue.shade500,
+                    ),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Provider.of<ThemeHelper>(context, listen: false)
+                                  .getTheme() ==
+                              ThemeType.light
+                          ? Colors.blue.shade800
+                          : Colors.blue.shade500,
+                    ),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                widget.setImage(_textController.text, widget.socialMedia);
+                Navigator.of(context).pop();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+                elevation: 5,
+              ),
+              child: Text(
+                'Use this image',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            SizedBox(height: 16),
           ],
         ),
       ),
