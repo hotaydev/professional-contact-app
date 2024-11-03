@@ -24,7 +24,7 @@ class VCardFormatter {
 
     if ((vCard.formattedName ?? '').isEmpty) {
       formattedName =
-          '${vCard.firstName} ${vCard.middleName} ${vCard.lastName}';
+          '${vCard.firstName} ${(vCard.middleName ?? '').isNotEmpty ? '${vCard.middleName} ' : ''}${vCard.lastName}';
     }
 
     formattedVCardString += 'FN:${e(formattedName)}${nl()}';

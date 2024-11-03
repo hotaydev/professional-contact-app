@@ -542,6 +542,7 @@ class SocialMediaImageDialog extends StatefulWidget {
 
 class _SocialMediaImageDialogState extends State<SocialMediaImageDialog> {
   late TextEditingController _textController;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -655,13 +656,21 @@ class _SocialMediaImageDialogState extends State<SocialMediaImageDialog> {
             ),
             SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () async {
-                // TODO: add loading animation in the button
-                await widget.setImage(_textController.text, widget.socialMedia);
-                if (mounted) {
-                  Navigator.of(context).pop();
-                }
-              },
+              onPressed: isLoading
+                  ? null
+                  : () async {
+                      setState(() {
+                        isLoading = true;
+                      });
+                      await widget.setImage(
+                          _textController.text, widget.socialMedia);
+                      if (mounted) {
+                        setState(() {
+                          isLoading = false;
+                        });
+                        Navigator.of(context).pop();
+                      }
+                    },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
                 shape: RoundedRectangleBorder(
@@ -670,14 +679,23 @@ class _SocialMediaImageDialogState extends State<SocialMediaImageDialog> {
                 padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
                 elevation: 5,
               ),
-              child: Text(
-                'Use this image',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              child: isLoading
+                  ? SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                        strokeWidth: 2.5,
+                      ),
+                    )
+                  : Text(
+                      'Use this image',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
             ),
             SizedBox(height: 16),
           ],
