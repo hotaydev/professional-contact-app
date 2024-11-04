@@ -4,9 +4,6 @@ class VCard {
   /// Cell phone number
   String? cellPhone;
 
-  /// User profile photo
-  String? photo;
-
   /// The address for private electronic mail communication
   String? email;
 
