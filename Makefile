@@ -1,20 +1,14 @@
 apk:
-	flutter build apk --flavor free --release --dart-define-from-file=variables.json
+	flutter build apk --release --dart-define-from-file=variables.json
 
 appbundle:
-	flutter build appbundle --flavor free --release --dart-define-from-file=variables.json
+	flutter build appbundle --release --dart-define-from-file=variables.json
 
 analyze:
-	flutter build appbundle --flavor free --target-platform android-arm64 --dart-define-from-file=variables.json --analyze-size
+	flutter build appbundle --target-platform android-arm64 --dart-define-from-file=variables.json --analyze-size
 
 run:
-	flutter run --flavor free --dart-define-from-file=variables.json
-
-premium_appbundle:
-	flutter build appbundle --release --flavor premium --dart-define-from-file=variables.json
-
-premium_apk:
-	flutter build apk --release --flavor premium --dart-define-from-file=variables.json
+	flutter run --dart-define-from-file=variables.json
 
 clean:
 	flutter clean

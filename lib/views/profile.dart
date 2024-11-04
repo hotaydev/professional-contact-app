@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:professional_contact/helpers/premium.dart';
 import 'package:professional_contact/helpers/theme.dart';
 import 'package:professional_contact/helpers/vCard/vcard.dart';
 import 'package:professional_contact/helpers/vCard/vcard_parser.dart';
@@ -43,6 +42,8 @@ class _ProfileViewState extends State<ProfileView> {
     _formData['profile.opt.lastName'] = vCard.lastName ?? '';
     _formData['profile.opt.org'] = vCard.organization ?? '';
     _formData['profile.opt.title'] = vCard.jobTitle ?? '';
+
+    // TODO: add a way to add country code
     _formData['profile.opt.phone'] = vCard.cellPhone ?? '';
     _formData['profile.opt.email'] = vCard.email ?? '';
     _formData['profile.opt.url'] = vCard.url ?? '';
@@ -148,7 +149,7 @@ class _ProfileViewState extends State<ProfileView> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    _chooseProfileImageIfPremiumApp(context, setImage);
+                    _chooseProfileImage(context, setImage);
                   },
                   child: CircleAvatar(
                     radius: 50,
@@ -343,84 +344,6 @@ class _ProfileViewState extends State<ProfileView> {
         );
       }
     }
-  }
-
-  Future<void> _chooseProfileImageIfPremiumApp(
-      BuildContext context,
-      Future<void> Function(String userAccountOrImageUrl, String socialImage)
-          setImage) async {
-    bool isPremium = VersionHelper().isPremium();
-
-    if (isPremium) {
-      _chooseProfileImage(context, setImage);
-    } else {
-      _upgradeToUseWarning(context);
-    }
-  }
-
-  Future<void> _upgradeToUseWarning(BuildContext context) async {
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Available on Premium Version',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-                SizedBox(height: 20),
-                Text(
-                  'You can add a profile image to your contact card and add any image to the QR Code with the premium version.',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 16),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4),
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      backgroundColor:
-                          Provider.of<ThemeHelper>(context, listen: false)
-                                      .getTheme() ==
-                                  ThemeType.light
-                              ? Colors.blue.shade50
-                              : Colors.blue.shade500.withOpacity(0.2),
-                      side: BorderSide(color: Colors.blue),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
-                      overlayColor: Colors.blue,
-                    ),
-                    onPressed: () {
-                      // TODO: Open the premium version on the store
-                    },
-                    child: Row(
-                      children: [
-                        Spacer(),
-                        Text(
-                          'Download the Premium Version',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue,
-                          ),
-                        ),
-                        Spacer(),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
   }
 
   Future<void> _chooseProfileImage(

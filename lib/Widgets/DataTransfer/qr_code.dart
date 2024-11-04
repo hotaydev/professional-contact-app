@@ -28,6 +28,7 @@ class QrCodeDataTransfer extends StatelessWidget {
           child: QrImageView(
             data: vCard,
             version: QrVersions.auto,
+            errorCorrectionLevel: QrErrorCorrectLevel.M,
             // size: 200.0,
           ),
         ),

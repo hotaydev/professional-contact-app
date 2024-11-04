@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:professional_contact/helpers/premium.dart';
 import 'package:professional_contact/helpers/theme.dart';
 import 'package:professional_contact/helpers/urls.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +20,21 @@ class SettingsView extends StatelessWidget {
           child: ListView(
             padding: EdgeInsets.symmetric(horizontal: 16.0),
             children: [
-              SizedBox(height: screenHeight * 0.05),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      showLicensePage(context: context);
+                    },
+                    icon: Icon(
+                      Icons.info_outline,
+                      color: Colors.grey.shade500,
+                    ),
+                  ),
+                ],
+              ),
+              // SizedBox(height: screenHeight * 0.05),
               Center(
                 child: Text(
                   'settings.title'.tr(),
@@ -31,19 +44,11 @@ class SettingsView extends StatelessWidget {
               SizedBox(height: screenHeight * 0.03),
               ThemeSelector(preferences: preferences),
               Divider(),
+              LanguageSelector(),
+              Divider(),
               NfcToggle(preferences: preferences),
               Divider(),
               ErrorTrackingReportToggle(preferences: preferences),
-              Divider(),
-              LanguageSelector(),
-              Divider(),
-              ListTile(
-                leading: Icon(Icons.article_outlined),
-                title: Text('settings.licenses'.tr()),
-                onTap: () {
-                  showLicensePage(context: context);
-                },
-              ),
               Divider(),
               ListTile(
                 leading: Icon(Icons.code),
@@ -66,19 +71,10 @@ class SettingsView extends StatelessWidget {
               //     UrlHelper().open("");
               //   },
               // ),
-              // Add Premium version link
-              // if (VersionHelper().isNotPremium()) Divider(),
-              // if (VersionHelper().isNotPremium()) ListTile(
-              //   leading: Icon(Icons.verified_outlined),
-              //   title: Text('settings.premium'.tr()),
-              //   onTap: () {
-              //     UrlHelper('').open();
-              //   },
-              // ),
             ],
           ),
         ),
-        if (VersionHelper().isNotPremium()) DeveloperContactTile(),
+        DeveloperContactTile(),
         // Add footer or any other static widgets here
       ],
     );

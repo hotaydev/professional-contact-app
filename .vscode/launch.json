@@ -16,13 +16,19 @@
       "name": "Run App (profile mode)",
       "request": "launch",
       "type": "dart",
-      "flutterMode": "profile"
+      "flutterMode": "profile",
+      "args": [
+        "--dart-define-from-file=variables.json"
+      ]
     },
     {
       "name": "Run App (release mode)",
       "request": "launch",
       "type": "dart",
-      "flutterMode": "release"
+      "flutterMode": "release",
+      "args": [
+        "--dart-define-from-file=variables.json"
+      ]
     }
   ]
 }
