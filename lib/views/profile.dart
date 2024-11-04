@@ -30,6 +30,7 @@ class _ProfileViewState extends State<ProfileView> {
   final _formKey = GlobalKey<FormState>();
   final Map<String, String> _formData = {};
   String? _profileImage;
+  BuildContext? widgetContext;
 
   @override
   void initState() {
@@ -88,19 +89,51 @@ class _ProfileViewState extends State<ProfileView> {
             _profileImage = responseData['photo'];
           });
         } else {
-          print("Failed to retrieve photo: ${responseData['error']}");
+          // In this case the photo is not found. Also, HTTP status 400 is returned, so probably this "else" is not used
+          _throwErrorToast(
+              'Profile image not found in the link or social media');
         }
       } else {
-        print('Failed to retrieve photo, status code: ${response.statusCode}');
+        _throwErrorToast('Profile image not found in the link or social media');
       }
     } catch (error) {
-      print('Error occurred: $error');
+      _throwErrorToast('Error occurred: $error');
+    }
+  }
+
+  void _throwErrorToast(String message) {
+    if (mounted && widgetContext != null) {
+      ScaffoldMessenger.of(widgetContext!).showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.red.shade700,
+          margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          duration: const Duration(milliseconds: 2000),
+          content: Text(
+            // message.tr(),
+            message,
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
+
+    setState(() {
+      widgetContext = context;
+    });
 
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(
@@ -439,13 +472,21 @@ class _ProfileViewState extends State<ProfileView> {
     Future<void> Function(String userAccountOrImageUrl, String socialImage)
         setImage,
   ) async {
+    Future<void> setImageAndCloseDialog(
+        String userAccountOrImageUrl, String socialMedia) async {
+      await setImage(userAccountOrImageUrl, socialMedia);
+      if (mounted) {
+        Navigator.of(context).pop();
+      }
+    }
+
     await showDialog(
       context: context,
       builder: (BuildContext context) {
         return SocialMediaImageDialog(
           image: image,
           socialMedia: socialMedia,
-          setImage: setImage,
+          setImage: setImageAndCloseDialog,
         );
       },
     );
