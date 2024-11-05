@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -49,14 +48,9 @@ class _NfcDataTransferState extends State<NfcDataTransfer>
   void transferContactWithNfc() async {
     NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
       try {
+        const apiUrl = String.fromEnvironment('API', defaultValue: '');
         NdefMessage message = NdefMessage(
-          [
-            NdefRecord.createMime(
-              'text/vcard',
-              Uint8List.fromList(widget.vCard.codeUnits),
-            )
-          ],
-        );
+            [NdefRecord.createUri(Uri.parse('$apiUrl?vcard=${widget.vCard}'))]);
         await Ndef.from(tag)?.write(message);
         NfcManager.instance.stopSession();
         setState(() {
