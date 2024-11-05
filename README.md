@@ -122,5 +122,3 @@ You can use the following commands from the `Makefile`:
 ## Join Us in Building a Better App
 
 We're excited to have you contribute to this project. Whether you're helping with translations, fixing bugs, or adding features, your input is highly valued. Before submitting a pull request, please create an issue to discuss your ideas.
-
-Colocar de volta a imagem de perfil por rede social
