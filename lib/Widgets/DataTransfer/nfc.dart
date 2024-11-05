@@ -49,8 +49,9 @@ class _NfcDataTransferState extends State<NfcDataTransfer>
     NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
       try {
         const apiUrl = String.fromEnvironment('API', defaultValue: '');
-        NdefMessage message = NdefMessage(
-            [NdefRecord.createUri(Uri.parse('$apiUrl?vcard=${widget.vCard}'))]);
+        NdefMessage message = NdefMessage([
+          NdefRecord.createUri(Uri.parse('$apiUrl/v/?vcard=${widget.vCard}'))
+        ]);
         await Ndef.from(tag)?.write(message);
         NfcManager.instance.stopSession();
         setState(() {
