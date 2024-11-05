@@ -28,12 +28,7 @@
     },
     "language": {
       "title": "Idioma",
-      "subtitle": "Alterar entre idiomas",
-      "options": {
-        "portuguese": "Português",
-        "english": "Inglês",
-        "spanish": "Espanhol"
-      }
+      "subtitle": "Alterar entre idiomas"
     },
     "github": "Ver no GitHub",
     "review": "Deixar uma crítica",
@@ -55,6 +50,7 @@
       "org": "Organização",
       "title": "Título / Cargo",
       "phone": "Número de Telefone",
+      "phone_hint": "Preferencialmente com código do país",
       "email": "E-mail",
       "url": "URL / Link",
       "notes": "Notas"

@@ -269,15 +269,9 @@ class LanguageSelector extends StatelessWidget {
         dropdownColor: Theme.of(context).scaffoldBackgroundColor,
         value: languageValue,
         items: [
-          DropdownMenuItem(
-              value: 'English',
-              child: Text('settings.language.options.english'.tr())),
-          DropdownMenuItem(
-              value: 'Portuguese',
-              child: Text('settings.language.options.portuguese'.tr())),
-          DropdownMenuItem(
-              value: 'Spanish',
-              child: Text('settings.language.options.spanish'.tr())),
+          DropdownMenuItem(value: 'English', child: Text('English')),
+          DropdownMenuItem(value: 'Portuguese', child: Text('Português')),
+          DropdownMenuItem(value: 'Spanish', child: Text('Español')),
         ],
         onChanged: (value) {
           Locale locale = switch (value) {

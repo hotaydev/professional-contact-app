@@ -43,8 +43,6 @@ class _ProfileViewState extends State<ProfileView> {
     _formData['profile.opt.lastName'] = vCard.lastName ?? '';
     _formData['profile.opt.org'] = vCard.organization ?? '';
     _formData['profile.opt.title'] = vCard.jobTitle ?? '';
-
-    // TODO: add a way to add country code
     _formData['profile.opt.phone'] = vCard.cellPhone ?? '';
     _formData['profile.opt.email'] = vCard.email ?? '';
     _formData['profile.opt.url'] = vCard.url ?? '';
@@ -252,6 +250,13 @@ class _ProfileViewState extends State<ProfileView> {
           initialValue: _formData[field],
           decoration: InputDecoration(
             labelText: field.tr(),
+            helperText: (field == 'profile.opt.phone')
+                ? 'profile.opt.phone_hint'.tr()
+                : null,
+            helperStyle: TextStyle(
+              fontSize: 12.0,
+              color: Colors.grey.shade500,
+            ),
             floatingLabelStyle: WidgetStateTextStyle.resolveWith(
               (Set<WidgetState> states) {
                 if (states.contains(WidgetState.focused)) {
