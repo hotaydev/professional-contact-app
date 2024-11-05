@@ -1,5 +1,5 @@
 apk:
-	flutter build apk --release --dart-define-from-file=variables.json
+	flutter build apk --release --target-platform android-arm64 --dart-define-from-file=variables.json
 
 appbundle:
 	flutter build appbundle --release --dart-define-from-file=variables.json

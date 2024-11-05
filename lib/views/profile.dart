@@ -62,7 +62,7 @@ class _ProfileViewState extends State<ProfileView> {
     final socialMediaLowercase = socialMedia.toLowerCase();
 
     if (socialMediaLowercase == 'network url') {
-      // TODO: check if it's a real image URL
+      // If it's not a real image URL just won't work
       setState(() {
         _profileImage = userAccountOrImageUrl;
       });
@@ -370,12 +370,13 @@ class _ProfileViewState extends State<ProfileView> {
                 ),
                 SizedBox(height: 16),
                 _buildImageOption(context, 'Mastodon',
-                    'assets/images/social/mastodon.png', setImage),
+                    'assets/images/social/mastodon.png', setImage, mounted),
                 _buildImageOption(context, 'GitHub',
-                    'assets/images/social/github.png', setImage),
+                    'assets/images/social/github.png', setImage, mounted),
                 _buildImageOption(context, 'Gravatar',
-                    'assets/images/social/gravatar.png', setImage),
-                _buildImageOption(context, 'Network URL', '', setImage),
+                    'assets/images/social/gravatar.png', setImage, mounted),
+                _buildImageOption(
+                    context, 'Network URL', '', setImage, mounted),
                 SizedBox(height: 16),
                 Text(
                   'We use images over the internet, so any URL would work.',
@@ -396,11 +397,13 @@ class _ProfileViewState extends State<ProfileView> {
     String socialMedia,
     Future<void> Function(String userAccountOrImageUrl, String socialImage)
         setImage,
+    bool isMounted,
   ) async {
     Future<void> setImageAndCloseDialog(
         String userAccountOrImageUrl, String socialMedia) async {
       await setImage(userAccountOrImageUrl, socialMedia);
-      if (mounted) {
+      if (isMounted) {
+        // ignore: use_build_context_synchronously
         Navigator.of(context).pop();
       }
     }
@@ -412,17 +415,20 @@ class _ProfileViewState extends State<ProfileView> {
           image: image,
           socialMedia: socialMedia,
           setImage: setImageAndCloseDialog,
+          isMounted: mounted,
         );
       },
     );
   }
 
   Widget _buildImageOption(
-      BuildContext context,
-      String label,
-      String imagePath,
-      Future<void> Function(String userAccountOrImageUrl, String socialImage)
-          setImage) {
+    BuildContext context,
+    String label,
+    String imagePath,
+    Future<void> Function(String userAccountOrImageUrl, String socialImage)
+        setImage,
+    bool isMounted,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: TextButton(
@@ -437,7 +443,13 @@ class _ProfileViewState extends State<ProfileView> {
           overlayColor: Colors.blue,
         ),
         onPressed: () async {
-          await _getImageFromSocialMedia(context, imagePath, label, setImage);
+          await _getImageFromSocialMedia(
+            context,
+            imagePath,
+            label,
+            setImage,
+            isMounted,
+          );
         },
         child: Row(
           children: [
@@ -495,12 +507,14 @@ class SocialMediaImageDialog extends StatefulWidget {
   final String socialMedia;
   final Future<void> Function(String userAccountOrImageUrl, String socialImage)
       setImage;
+  final bool isMounted;
 
   const SocialMediaImageDialog({
     super.key,
     required this.image,
     required this.socialMedia,
     required this.setImage,
+    required this.isMounted,
   });
   @override
   State<SocialMediaImageDialog> createState() => _SocialMediaImageDialogState();
@@ -630,10 +644,11 @@ class _SocialMediaImageDialogState extends State<SocialMediaImageDialog> {
                       });
                       await widget.setImage(
                           _textController.text, widget.socialMedia);
-                      if (mounted) {
+                      if (widget.isMounted) {
                         setState(() {
                           isLoading = false;
                         });
+                        // ignore: use_build_context_synchronously
                         Navigator.of(context).pop();
                       }
                     },
