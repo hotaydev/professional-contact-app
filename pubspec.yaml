@@ -12,17 +12,17 @@ environment:
 
 dependencies:
   cached_network_image: ^3.4.1
-  device_info_plus: ^11.1.0
+  device_info_plus: ^11.1.1
   easy_localization: ^3.0.7
   flutter:
     sdk: flutter
   http: ^1.2.2
-  package_info_plus: ^8.1.0
+  package_info_plus: ^8.1.1
   path_provider: ^2.1.5
   provider: ^6.1.2
   qr_flutter: ^4.1.0
-  share_plus: ^10.1.1
-  shared_preferences: ^2.3.2
+  share_plus: ^10.1.2
+  shared_preferences: ^2.3.3
   url_launcher: ^6.3.1
 
 dev_dependencies:
