@@ -45,7 +45,6 @@ class HomeView extends StatelessWidget {
         SizedBox(height: screenHeight * 0.05),
         ChooseDataTransfer(
           vCard: preferences.getString('vCard') ?? '',
-          withNfc: preferences.getBool('withNfc') ?? true,
         ),
         Spacer(),
         Container(

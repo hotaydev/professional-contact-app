@@ -1,10 +1,10 @@
 name: professional_contact
-description: "Share your professional contact easily with NFC and QR Code."
+description: "Share your professional contact easily with a QR Code."
 publish_to: "none"
-version: 0.2.0+2
-homepage: https://github.com/hotaydev/professional-contact-nfc
-repository: https://github.com/hotaydev/professional-contact-nfc.git
-issue_tracker: https://github.com/hotaydev/professional-contact-nfc/issues
+version: 0.3.0+3
+homepage: https://github.com/hotaydev/professional-contact-app
+repository: https://github.com/hotaydev/professional-contact-app.git
+issue_tracker: https://github.com/hotaydev/professional-contact-app/issues
 license: AGPL-3.0
 
 environment:
@@ -17,7 +17,6 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^1.2.2
-  nfc_manager: ^3.5.0
   package_info_plus: ^8.1.0
   path_provider: ^2.1.5
   provider: ^6.1.2

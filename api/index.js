@@ -22,7 +22,7 @@ app.get("/v/", async (req, res) => {
 });
 
 app.get("/", async (req, res) => {
-  res.send("https://github.com/hotaydev/professional-contact-nfc/tree/main/api");
+  res.send("https://github.com/hotaydev/professional-contact-app/tree/main/api");
 });
 
 const accountTypes = ["mastodon", "gravatar", "github"];

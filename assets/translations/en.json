@@ -1,14 +1,11 @@
 {
   "title": "Professional Contact",
   "getStarted": "To get started, add your information\nin the \"profile\" tab.",
-  "nfc": {
-    "errorTransmitting": "Error transferring data via NFC!",
-    "disabledOrNotSupported": "NFC disabled or not supported",
-    "sent": "SENT"
-  },
-  "transferTypes": {
-    "qrCode": "Use QR Code",
-    "nfc": "Use NFC"
+  "dataSwitcher": {
+    "online": "Use full version",
+    "offline": "Use quick version",
+    "adviceNeedInternet": "The person receiving must have internet",
+    "noInternetNeeded": "No internet needed"
   },
   "settings": {
     "title": "Settings",
@@ -17,10 +14,6 @@
       "subtitle": "Change between themes",
       "light": "Light",
       "dark": "Dark"
-    },
-    "nfc": {
-      "title": "Device with NFC",
-      "subtitle": "Disable this if your device doesn't have NFC to hide warnings"
     },
     "errorTrack": {
       "title": "Send Errors",

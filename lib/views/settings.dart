@@ -46,8 +46,6 @@ class SettingsView extends StatelessWidget {
               Divider(),
               LanguageSelector(),
               Divider(),
-              NfcToggle(preferences: preferences),
-              Divider(),
               ErrorTrackingReportToggle(preferences: preferences),
               Divider(),
               ListTile(
@@ -57,7 +55,7 @@ class SettingsView extends StatelessWidget {
                   const String url = String.fromEnvironment(
                     'GITHUB_REPO_URL',
                     defaultValue:
-                        'https://github.com/hotaydev/professional-contact-nfc',
+                        'https://github.com/hotaydev/professional-contact-app',
                   );
                   await UrlHelper(url).open();
                 },
@@ -174,41 +172,6 @@ class ThemeSelector extends StatelessWidget {
           }
         },
       ),
-    );
-  }
-}
-
-class NfcToggle extends StatefulWidget {
-  final SharedPreferences preferences;
-
-  const NfcToggle({super.key, required this.preferences});
-
-  @override
-  State<NfcToggle> createState() => _NfcToggleState();
-}
-
-class _NfcToggleState extends State<NfcToggle> {
-  late bool haveNfcAvailable;
-
-  @override
-  void initState() {
-    super.initState();
-    haveNfcAvailable = widget.preferences.getBool('withNfc') ?? true;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SwitchListTile(
-      title: Text('settings.nfc.title'.tr()),
-      subtitle: Text('settings.nfc.subtitle'.tr()),
-      activeColor: Colors.blue.shade500,
-      value: haveNfcAvailable,
-      onChanged: (value) {
-        setState(() {
-          haveNfcAvailable = value;
-        });
-        widget.preferences.setBool('withNfc', value);
-      },
     );
   }
 }

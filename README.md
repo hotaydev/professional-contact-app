@@ -1,6 +1,6 @@
-# Professional Contact NFC App
+# Professional Contact App
 
-A lightweight, fast, and privacy-focused app for sharing your professional contact details via NFC, QR Code, or by sending them to other applications. Ideal for entrepreneurs or small business owners who need a hassle-free way to share their contact information. No ads, no trackers, and free forever!
+A lightweight, fast, and privacy-focused app for sharing your professional contact details via QR Code or by sending it to other applications. Ideal for entrepreneurs or small business owners who need a hassle-free way to share their contact information. No ads, no trackers, and free forever!
 
 ---
 
@@ -8,22 +8,20 @@ A lightweight, fast, and privacy-focused app for sharing your professional conta
 1. [Introduction](#introduction)
 2. [Features](#features)
 3. [Why This App?](#why-this-app)
-4. [How It Works](#how-it-works)
-5. [Tech Stack](#tech-stack)
-6. [Contributing](#contributing)
-7. [License](#license)
-8. [Developing the App](#developing-the-app)
+4. [Tech Stack](#tech-stack)
+5. [Contributing](#contributing)
+6. [License](#license)
+7. [Developing the App](#developing-the-app)
 
 ---
 
 ## Introduction
 
-Inspired by physical business cards like [Taggo](https://taggo.one/) and [Monocard](https://monocard.com.br/), this app provides a modern, digital alternative that eliminates the need for carrying a card. Perfect for small businesses or startups, this app is **free**, **lightweight**, and **convenient**, helping you share your professional details instantly with NFC or QR codes.
+Inspired by physical business cards like [Taggo](https://taggo.one/) and [Monocard](https://monocard.com.br/), this app provides a modern, digital alternative that eliminates the need for carrying a card. Perfect for small businesses or startups, this app is **free**, **lightweight**, and **convenient**, helping you share your professional details instantly with QR codes.
 
 ## Features
 
 - **Share your professional contact** easily:
-  - Via NFC (for NFC-enabled devices)
   - Via QR Code (for all devices)
   - As a Virtual Contact Card (vCard)
 - **Privacy first**: No ads or trackers.
@@ -35,15 +33,11 @@ Inspired by physical business cards like [Taggo](https://taggo.one/) and [Monoca
 
 ## Why This App?
 
-Other NFC-based contact-sharing solutions, like physical cards, can be expensive and less practical. With this app, you can:
+Other contact-sharing solutions, like physical cards, can be expensive and less practical. With this app, you can:
 - Share your contact details instantly without carrying an additional card.
 - Ensure privacy and control over your data.
 - Enjoy a completely **ad-free** experience.
 - Use it free of cost—now and forever, backed by an open-source license.
-
-## How It Works
-
-Phones with NFC support can share contact details by simply tapping devices together. For phones without NFC, you can generate a QR code that can be scanned. Additionally, you can export and share your contact as a vCard, enabling seamless integration with other apps.
 
 ---
 
@@ -51,17 +45,17 @@ Phones with NFC support can share contact details by simply tapping devices toge
 
 This is a [Flutter](https://flutter.dev/) app, utilizing the following open-source packages:
 
-- **[device_info_plus](https://pub.dev/packages/device_info_plus)**: For retrieving device info.
-- **[easy_localization](https://pub.dev/packages/easy_localization)**: For multi-language support.
-- **[http](https://pub.dev/packages/http)**: For optional error logging (user-controlled).
-- **[nfc_manager](https://pub.dev/packages/nfc_manager)**: For NFC functionality (upgraded in future releases).
-- **[package_info_plus](https://pub.dev/packages/package_info_plus)**: To gather app information.
-- **[path_provider](https://pub.dev/packages/path_provider)**: For managing app storage, e.g., vCards.
-- **[provider](https://pub.dev/packages/provider)**: For state management.
-- **[qr_flutter](https://pub.dev/packages/qr_flutter)**: For generating QR codes.
-- **[share_plus](https://pub.dev/packages/share_plus)**: For sharing the vCard through other apps.
-- **[shared_preferences](https://pub.dev/packages/shared_preferences)**: For storing non-sensitive information.
-- **[url_launcher](https://pub.dev/packages/url_launcher)**: For URL handling.
+- **[device_info_plus](https://pub.dev/packages/device_info_plus)**
+- **[easy_localization](https://pub.dev/packages/easy_localization)**
+- **[http](https://pub.dev/packages/http)**
+- **[package_info_plus](https://pub.dev/packages/package_info_plus)**
+- **[path_provider](https://pub.dev/packages/path_provider)**
+- **[provider](https://pub.dev/packages/provider)**
+- **[qr_flutter](https://pub.dev/packages/qr_flutter)**
+- **[share_plus](https://pub.dev/packages/share_plus)**
+- **[shared_preferences](https://pub.dev/packages/shared_preferences)**
+- **[url_launcher](https://pub.dev/packages/url_launcher)**
+- **[cached_network_image](https://pub.dev/packages/cached_network_image)**
 
 ---
 

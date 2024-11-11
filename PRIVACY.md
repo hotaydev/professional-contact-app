@@ -1,6 +1,6 @@
 # Privacy Policy
 
-We value your privacy, and we are committed to ensuring your data remains secure. Below is a summary of how your information is handled while using the Professional Contact NFC App:
+We value your privacy, and we are committed to ensuring your data remains secure. Below is a summary of how your information is handled while using the Professional Contact App:
 
 - **No Data Collection or Sharing**: We do not collect or share any personal data from our users. All data is stored locally on your device and remains private.
 - **Optional Error Reporting**: In the event of an exception or error, you can choose to send crash reports to help us improve the app. This feature is enabled by default but can be **disabled at any time** in the app settings.

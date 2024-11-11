@@ -1,14 +1,11 @@
 {
   "title": "Contato Profissional",
   "getStarted": "Para começar, adicione suas informações\nna aba \"perfil\".",
-  "nfc": {
-    "errorTransmitting": "Erro ao transferir dados via NFC!",
-    "disabledOrNotSupported": "NFC desabilitado ou não suportado",
-    "sent": "ENVIADO"
-  },
-  "transferTypes": {
-    "qrCode": "Usar QR Code",
-    "nfc": "Usar NFC"
+  "dataSwitcher": {
+    "online": "Usar versão completa",
+    "offline": "Usar versão rápida",
+    "adviceNeedInternet": "Quem vai receber precisa ter internet",
+    "noInternetNeeded": "Não precisa de internet"
   },
   "settings": {
     "title": "Configurações",
@@ -17,10 +14,6 @@
       "subtitle": "Alterar entre temas",
       "light": "Claro",
       "dark": "Escuro"
-    },
-    "nfc": {
-      "title": "Dispositivo com NFC",
-      "subtitle": "Desative isso se o seu dispositivo não tiver NFC para ocultar avisos"
     },
     "errorTrack": {
       "title": "Enviar Erros",
