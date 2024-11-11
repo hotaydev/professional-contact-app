@@ -27,7 +27,7 @@ class ErrorHandler {
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
       final String appInformation =
-          '${packageInfo.appName} (${packageInfo.packageName}) - Version ${packageInfo.version} (${packageInfo.buildNumber})';
+          'Version ${packageInfo.version} (${packageInfo.buildNumber})';
       String deviceInformation = '';
 
       if (Platform.isAndroid) {
