@@ -20,12 +20,8 @@ class VCardFormatter {
     formattedVCardString += 'BEGIN:VCARD${nl()}';
     formattedVCardString += 'VERSION:3.0${nl()}';
 
-    String formattedName = vCard.formattedName ?? '';
-
-    if ((vCard.formattedName ?? '').isEmpty) {
-      formattedName =
-          '${vCard.firstName} ${(vCard.middleName ?? '').isNotEmpty ? '${vCard.middleName} ' : ''}${vCard.lastName}';
-    }
+    String formattedName =
+        '${vCard.firstName} ${(vCard.middleName ?? '').isNotEmpty ? '${vCard.middleName} ' : ''}${vCard.lastName}';
 
     formattedVCardString += 'FN:${e(formattedName)}${nl()}';
     formattedVCardString +=

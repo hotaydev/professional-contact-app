@@ -35,5 +35,6 @@ setup:
 	if [ ! -f "android/key.properties" ]; then open https://docs.flutter.dev/deployment/android#sign-the-app; fi
 	@$(MAKE) get
 	@$(MAKE) upgrade
+	echo -e "\n\nIf running API locally, enter ./api/ and run pnpm install."
 
 .PHONY: run
