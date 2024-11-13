@@ -1,7 +1,7 @@
 name: professional_contact
 description: "Share your professional contact easily with a QR Code."
 publish_to: "none"
-version: 1.0.1+4
+version: 1.0.1+5
 homepage: https://github.com/hotaydev/professional-contact-app
 repository: https://github.com/hotaydev/professional-contact-app.git
 issue_tracker: https://github.com/hotaydev/professional-contact-app/issues
