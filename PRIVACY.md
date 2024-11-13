@@ -13,4 +13,4 @@ We value your privacy, and we are committed to ensuring your data remains secure
 
 ---
 
-**Last Updated**: October 18, 2024
+**Last Updated**: October 12, 2024

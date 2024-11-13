@@ -11,6 +11,13 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+Color getColorForTextInputByTheme(BuildContext context) {
+  return Provider.of<ThemeHelper>(context, listen: false).getTheme() ==
+          ThemeType.light
+      ? Colors.blue.shade800
+      : Colors.blue.shade500;
+}
+
 class ProfileView extends StatefulWidget {
   final Function goToView;
   final SharedPreferences preferences;
@@ -145,61 +152,9 @@ class _ProfileViewState extends State<ProfileView> {
         key: _formKey,
         child: Column(
           children: [
-            Stack(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    _chooseProfileImage(context, setImage);
-                  },
-                  child: CircleAvatar(
-                    radius: 50,
-                    backgroundColor: Colors.grey.shade300,
-                    child: _profileImage != null
-                        ? ClipOval(
-                            child: CachedNetworkImage(
-                              imageUrl: _profileImage!,
-                              placeholder: (context, url) => Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                              errorWidget: (context, url, error) => Icon(
-                                Icons.error,
-                                size: 50,
-                                color: Colors.grey.shade700,
-                              ),
-                              fit: BoxFit.cover,
-                              width: 100,
-                              height: 100,
-                            ),
-                          )
-                        : Icon(
-                            Icons.person,
-                            size: 50,
-                            color: Colors.grey.shade700,
-                          ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 4,
-                  right: 4,
-                  child: Container(
-                    width: 24,
-                    height: 24,
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade100,
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Colors.grey.shade200,
-                        width: 1,
-                      ),
-                    ),
-                    child: Icon(
-                      Icons.edit,
-                      size: 16,
-                      color: Colors.grey.shade700,
-                    ),
-                  ),
-                ),
-              ],
+            UserProfileImage(
+              setImage: setImage,
+              profileImage: _profileImage,
             ),
             SizedBox(height: 20),
             Text(
@@ -261,11 +216,7 @@ class _ProfileViewState extends State<ProfileView> {
               (Set<WidgetState> states) {
                 if (states.contains(WidgetState.focused)) {
                   return TextStyle(
-                    color: Provider.of<ThemeHelper>(context, listen: false)
-                                .getTheme() ==
-                            ThemeType.light
-                        ? Colors.blue.shade800
-                        : Colors.blue.shade500,
+                    color: getColorForTextInputByTheme(context),
                   );
                 }
                 return TextStyle();
@@ -276,21 +227,13 @@ class _ProfileViewState extends State<ProfileView> {
             ),
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(
-                color: Provider.of<ThemeHelper>(context, listen: false)
-                            .getTheme() ==
-                        ThemeType.light
-                    ? Colors.blue.shade800
-                    : Colors.blue.shade500,
+                color: getColorForTextInputByTheme(context),
               ),
               borderRadius: BorderRadius.circular(8.0),
             ),
             border: OutlineInputBorder(
               borderSide: BorderSide(
-                color: Provider.of<ThemeHelper>(context, listen: false)
-                            .getTheme() ==
-                        ThemeType.light
-                    ? Colors.blue.shade800
-                    : Colors.blue.shade500,
+                color: getColorForTextInputByTheme(context),
               ),
               borderRadius: BorderRadius.circular(8.0),
             ),
@@ -352,11 +295,19 @@ class _ProfileViewState extends State<ProfileView> {
       }
     }
   }
+}
+
+class UserProfileImage extends StatelessWidget {
+  final String? profileImage;
+  final Future<void> Function(String, String) setImage;
+  const UserProfileImage(
+      {super.key, required this.profileImage, required this.setImage});
 
   Future<void> _chooseProfileImage(
-      BuildContext context,
-      Future<void> Function(String userAccountOrImageUrl, String socialImage)
-          setImage) async {
+    BuildContext context,
+    Future<void> Function(String userAccountOrImageUrl, String socialImage)
+        setImage,
+  ) async {
     await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -375,13 +326,12 @@ class _ProfileViewState extends State<ProfileView> {
                 ),
                 SizedBox(height: 16),
                 _buildImageOption(context, 'Mastodon',
-                    'assets/images/social/mastodon.png', setImage, mounted),
+                    'assets/images/social/mastodon.png', setImage),
                 _buildImageOption(context, 'GitHub',
-                    'assets/images/social/github.png', setImage, mounted),
+                    'assets/images/social/github.png', setImage),
                 _buildImageOption(context, 'Gravatar',
-                    'assets/images/social/gravatar.png', setImage, mounted),
-                _buildImageOption(
-                    context, 'Network URL', '', setImage, mounted),
+                    'assets/images/social/gravatar.png', setImage),
+                _buildImageOption(context, 'Network URL', '', setImage),
                 SizedBox(height: 16),
                 Text(
                   'We use images over the internet, so any URL would work.',
@@ -402,15 +352,12 @@ class _ProfileViewState extends State<ProfileView> {
     String socialMedia,
     Future<void> Function(String userAccountOrImageUrl, String socialImage)
         setImage,
-    bool isMounted,
   ) async {
     Future<void> setImageAndCloseDialog(
         String userAccountOrImageUrl, String socialMedia) async {
       await setImage(userAccountOrImageUrl, socialMedia);
-      if (isMounted) {
-        // ignore: use_build_context_synchronously
-        Navigator.of(context).pop();
-      }
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pop();
     }
 
     await showDialog(
@@ -420,20 +367,17 @@ class _ProfileViewState extends State<ProfileView> {
           image: image,
           socialMedia: socialMedia,
           setImage: setImageAndCloseDialog,
-          isMounted: mounted,
         );
       },
     );
   }
 
   Widget _buildImageOption(
-    BuildContext context,
-    String label,
-    String imagePath,
-    Future<void> Function(String userAccountOrImageUrl, String socialImage)
-        setImage,
-    bool isMounted,
-  ) {
+      BuildContext context,
+      String label,
+      String imagePath,
+      Future<void> Function(String userAccountOrImageUrl, String socialImage)
+          setImage) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: TextButton(
@@ -453,7 +397,6 @@ class _ProfileViewState extends State<ProfileView> {
             imagePath,
             label,
             setImage,
-            isMounted,
           );
         },
         child: Row(
@@ -505,6 +448,66 @@ class _ProfileViewState extends State<ProfileView> {
       ),
     );
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        GestureDetector(
+          onTap: () {
+            _chooseProfileImage(context, setImage);
+          },
+          child: CircleAvatar(
+            radius: 50,
+            backgroundColor: Colors.grey.shade300,
+            child: profileImage != null
+                ? ClipOval(
+                    child: CachedNetworkImage(
+                      imageUrl: profileImage!,
+                      placeholder: (context, url) => Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      errorWidget: (context, url, error) => Icon(
+                        Icons.error,
+                        size: 50,
+                        color: Colors.grey.shade700,
+                      ),
+                      fit: BoxFit.cover,
+                      width: 100,
+                      height: 100,
+                    ),
+                  )
+                : Icon(
+                    Icons.person,
+                    size: 50,
+                    color: Colors.grey.shade700,
+                  ),
+          ),
+        ),
+        Positioned(
+          bottom: 4,
+          right: 4,
+          child: Container(
+            width: 24,
+            height: 24,
+            decoration: BoxDecoration(
+              color: Colors.grey.shade100,
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: Colors.grey.shade200,
+                width: 1,
+              ),
+            ),
+            child: Icon(
+              Icons.edit,
+              size: 16,
+              color: Colors.grey.shade700,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }
 
 class SocialMediaImageDialog extends StatefulWidget {
@@ -512,14 +515,12 @@ class SocialMediaImageDialog extends StatefulWidget {
   final String socialMedia;
   final Future<void> Function(String userAccountOrImageUrl, String socialImage)
       setImage;
-  final bool isMounted;
 
   const SocialMediaImageDialog({
     super.key,
     required this.image,
     required this.socialMedia,
     required this.setImage,
-    required this.isMounted,
   });
   @override
   State<SocialMediaImageDialog> createState() => _SocialMediaImageDialogState();
@@ -602,12 +603,7 @@ class _SocialMediaImageDialogState extends State<SocialMediaImageDialog> {
                     (Set<WidgetState> states) {
                       if (states.contains(WidgetState.focused)) {
                         return TextStyle(
-                          color:
-                              Provider.of<ThemeHelper>(context, listen: false)
-                                          .getTheme() ==
-                                      ThemeType.light
-                                  ? Colors.blue.shade800
-                                  : Colors.blue.shade500,
+                          color: getColorForTextInputByTheme(context),
                         );
                       }
                       return TextStyle();
@@ -618,21 +614,13 @@ class _SocialMediaImageDialogState extends State<SocialMediaImageDialog> {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Provider.of<ThemeHelper>(context, listen: false)
-                                  .getTheme() ==
-                              ThemeType.light
-                          ? Colors.blue.shade800
-                          : Colors.blue.shade500,
+                      color: getColorForTextInputByTheme(context),
                     ),
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Provider.of<ThemeHelper>(context, listen: false)
-                                  .getTheme() ==
-                              ThemeType.light
-                          ? Colors.blue.shade800
-                          : Colors.blue.shade500,
+                      color: getColorForTextInputByTheme(context),
                     ),
                     borderRadius: BorderRadius.circular(8.0),
                   ),
@@ -649,13 +637,11 @@ class _SocialMediaImageDialogState extends State<SocialMediaImageDialog> {
                       });
                       await widget.setImage(
                           _textController.text, widget.socialMedia);
-                      if (widget.isMounted) {
-                        setState(() {
-                          isLoading = false;
-                        });
-                        // ignore: use_build_context_synchronously
-                        Navigator.of(context).pop();
-                      }
+                      setState(() {
+                        isLoading = false;
+                      });
+                      // ignore: use_build_context_synchronously
+                      Navigator.of(context).pop();
                     },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,

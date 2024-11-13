@@ -36,6 +36,11 @@ class _PageLayoutState extends State<PageLayout> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 0,
+        elevation: 0,
+        shadowColor: Colors.transparent,
+        foregroundColor: Colors.transparent,
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
       ),
       body: SafeArea(
         child: switch (currentView) {

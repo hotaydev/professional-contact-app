@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:professional_contact/helpers/theme.dart';
@@ -20,27 +21,9 @@ class SettingsView extends StatelessWidget {
           child: ListView(
             padding: EdgeInsets.symmetric(horizontal: 16.0),
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      showLicensePage(context: context);
-                    },
-                    icon: Icon(
-                      Icons.info_outline,
-                      color: Colors.grey.shade500,
-                    ),
-                  ),
-                ],
-              ),
+              ShowLicensesPageIcon(),
               // SizedBox(height: screenHeight * 0.05),
-              Center(
-                child: Text(
-                  'settings.title'.tr(),
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-              ),
+              SettingsPageTitle(),
               SizedBox(height: screenHeight * 0.03),
               ThemeSelector(preferences: preferences),
               Divider(),
@@ -48,32 +31,80 @@ class SettingsView extends StatelessWidget {
               Divider(),
               ErrorTrackingReportToggle(preferences: preferences),
               Divider(),
-              ListTile(
-                leading: Icon(Icons.code),
-                title: Text('settings.github'.tr()),
-                onTap: () async {
-                  const String url = String.fromEnvironment(
-                    'GITHUB_REPO_URL',
-                    defaultValue:
-                        'https://github.com/hotaydev/professional-contact-app',
-                  );
-                  await UrlHelper(url).open();
-                },
-              ),
-              Divider(),
-              // Add Play Store link
-              // ListTile(
-              //   leading: Icon(Icons.star_outline),
-              //   title: Text('settings.review'.tr()),
-              //   onTap: () {
-              //     UrlHelper().open("");
-              //   },
-              // ),
+              GitHubListTile(),
+              if (Platform.isAndroid)
+                Divider(), // Can be removed after adding iOS link
+              if (Platform
+                  .isAndroid) // After having the iOS link, we can move the logic inside the UrlHelper() handler
+                ListTile(
+                  leading: Icon(Icons.star_outline),
+                  title: Text('settings.review'.tr()),
+                  onTap: () {
+                    UrlHelper(
+                            'https://play.google.com/store/apps/details?id=dev.hotay.professional_contact')
+                        .open();
+                  },
+                ),
             ],
           ),
         ),
         DeveloperContactTile(),
         // Add footer or any other static widgets here
+      ],
+    );
+  }
+}
+
+class SettingsPageTitle extends StatelessWidget {
+  const SettingsPageTitle({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        'settings.title'.tr(),
+        style: Theme.of(context).textTheme.headlineSmall,
+      ),
+    );
+  }
+}
+
+class GitHubListTile extends StatelessWidget {
+  const GitHubListTile({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(Icons.code),
+      title: Text('settings.github'.tr()),
+      onTap: () async {
+        const String url = String.fromEnvironment(
+          'GITHUB_REPO_URL',
+          defaultValue: 'https://github.com/hotaydev/professional-contact-app',
+        );
+        await UrlHelper(url).open();
+      },
+    );
+  }
+}
+
+class ShowLicensesPageIcon extends StatelessWidget {
+  const ShowLicensesPageIcon({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        IconButton(
+          onPressed: () {
+            showLicensePage(context: context);
+          },
+          icon: Icon(
+            Icons.info_outline,
+            color: Colors.grey.shade500,
+          ),
+        ),
       ],
     );
   }

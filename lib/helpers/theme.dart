@@ -19,6 +19,11 @@ ThemeData darkTheme = ThemeData.dark().copyWith(
     foregroundColor: Colors.white,
     systemOverlayStyle: SystemUiOverlayStyle.light,
   ),
+  textSelectionTheme: ThemeData.dark().textSelectionTheme.copyWith(
+        cursorColor: Colors.blue.shade500,
+        selectionColor: Colors.blue.shade200,
+        selectionHandleColor: Colors.blue.shade500,
+      ),
 );
 
 /// App Light Theme
@@ -39,6 +44,11 @@ ThemeData lightTheme = ThemeData.light().copyWith(
     foregroundColor: Colors.black,
     systemOverlayStyle: SystemUiOverlayStyle.dark,
   ),
+  textSelectionTheme: ThemeData.light().textSelectionTheme.copyWith(
+        cursorColor: Colors.blue.shade800,
+        selectionColor: Colors.blue.shade200,
+        selectionHandleColor: Colors.blue.shade800,
+      ),
 );
 
 /// Available app themes

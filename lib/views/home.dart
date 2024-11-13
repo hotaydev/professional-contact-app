@@ -15,6 +15,33 @@ class HomeView extends StatelessWidget {
     required this.preferences,
   });
 
+  @override
+  Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+
+    return Column(
+      children: [
+        SizedBox(height: screenHeight * 0.05),
+        Text(
+          'title'.tr(),
+          style: Theme.of(context).textTheme.headlineSmall,
+        ),
+        SizedBox(height: screenHeight * 0.05),
+        ChooseDataTransfer(
+          vCard: preferences.getString('vCard') ?? '',
+        ),
+        Spacer(),
+        ShareVCardArea(preferences: preferences),
+        SizedBox(height: screenHeight * 0.02),
+      ],
+    );
+  }
+}
+
+class ShareVCardArea extends StatelessWidget {
+  final SharedPreferences preferences;
+  const ShareVCardArea({super.key, required this.preferences});
+
   void shareVCard(BuildContext context) async {
     final box = context.findRenderObject() as RenderBox?; // Required for iPad
     final professionalContactText =
@@ -33,37 +60,20 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-
-    return Column(
-      children: [
-        SizedBox(height: screenHeight * 0.05),
-        Text(
-          'title'.tr(),
-          style: Theme.of(context).textTheme.headlineSmall,
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: Colors.grey.shade300,
+          width: 1.0,
         ),
-        SizedBox(height: screenHeight * 0.05),
-        ChooseDataTransfer(
-          vCard: preferences.getString('vCard') ?? '',
-        ),
-        Spacer(),
-        Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: Colors.grey.shade300,
-              width: 1.0,
-            ),
-          ),
-          child: IconButton(
-            onPressed: () async {
-              shareVCard(context);
-            },
-            icon: Icon(Icons.share_outlined),
-          ),
-        ),
-        SizedBox(height: screenHeight * 0.02),
-      ],
+      ),
+      child: IconButton(
+        onPressed: () async {
+          shareVCard(context);
+        },
+        icon: Icon(Icons.share_outlined),
+      ),
     );
   }
 }
