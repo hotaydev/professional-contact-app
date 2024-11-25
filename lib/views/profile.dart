@@ -98,11 +98,10 @@ class _ProfileViewState extends State<ProfileView> {
             _profileImage = responseData['photo'];
           });
         } else {
-          _throwErrorToast(
-              'Profile image not found in the link or social media');
+          _throwErrorToast('profile.profileImage.notFound'.tr());
         }
       } else {
-        _throwErrorToast('Profile image not found in the link or social media');
+        _throwErrorToast('profile.profileImage.notFound'.tr());
       }
     } catch (error) {
       _throwErrorToast('Error occurred: $error');
@@ -246,20 +245,52 @@ class _ProfileViewState extends State<ProfileView> {
     }).toList();
   }
 
+  String? _normalizeUrl(String? url) {
+    if (url == null || url.toString().trim().isEmpty) {
+      return null; // Return null if the value is null or empty
+    }
+
+    String urlString = url.trim();
+    Uri uri = Uri.parse(urlString);
+
+    // If the URI doesn't have a scheme, add "https://"
+    if (uri.scheme.isEmpty) {
+      uri = Uri.parse('https://$urlString');
+    }
+
+    return uri.toString();
+  }
+
   Future<void> _saveVCard() async {
     if (_formKey.currentState?.validate() ?? false) {
       _formKey.currentState?.save();
 
       // Assign form values to vCard properties
-      vCard.firstName = _formData['profile.opt.firstName'];
-      vCard.middleName = _formData['profile.opt.middleName'];
-      vCard.lastName = _formData['profile.opt.lastName'];
-      vCard.organization = _formData['profile.opt.org'];
-      vCard.jobTitle = _formData['profile.opt.title'];
-      vCard.cellPhone = _formData['profile.opt.phone'];
-      vCard.email = _formData['profile.opt.email'];
-      vCard.url = _formData['profile.opt.url'];
-      vCard.note = _formData['profile.opt.notes'];
+      vCard.firstName = _formData['profile.opt.firstName']?.trim() != ''
+          ? _formData['profile.opt.firstName']
+          : null;
+      vCard.middleName = _formData['profile.opt.middleName']?.trim() != ''
+          ? _formData['profile.opt.middleName']
+          : null;
+      vCard.lastName = _formData['profile.opt.lastName']?.trim() != ''
+          ? _formData['profile.opt.lastName']
+          : null;
+      vCard.organization = _formData['profile.opt.org']?.trim() != ''
+          ? _formData['profile.opt.org']
+          : null;
+      vCard.jobTitle = _formData['profile.opt.title']?.trim() != ''
+          ? _formData['profile.opt.title']
+          : null;
+      vCard.cellPhone = _formData['profile.opt.phone']?.trim() != ''
+          ? _formData['profile.opt.phone']
+          : null;
+      vCard.email = _formData['profile.opt.email']?.trim() != ''
+          ? _formData['profile.opt.email']
+          : null;
+      vCard.note = _formData['profile.opt.notes']?.trim() != ''
+          ? _formData['profile.opt.notes']
+          : null;
+      vCard.url = _normalizeUrl(_formData['profile.opt.url']);
       vCard.photo = _profileImage;
 
       String vCardString = vCard.getFormattedString();
@@ -320,7 +351,7 @@ class UserProfileImage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Select Profile Image',
+                  'profile.profileImage.select'.tr(),
                   style: Theme.of(context).textTheme.headlineSmall,
                   textAlign: TextAlign.center,
                 ),
@@ -331,10 +362,11 @@ class UserProfileImage extends StatelessWidget {
                     'assets/images/social/github.png', setImage),
                 _buildImageOption(context, 'Gravatar',
                     'assets/images/social/gravatar.png', setImage),
-                _buildImageOption(context, 'Network URL', '', setImage),
+                _buildImageOption(
+                    context, 'profile.profileImage.network'.tr(), '', setImage),
                 SizedBox(height: 16),
                 Text(
-                  'We use images over the internet, so any URL would work.',
+                  'profile.profileImage.anyURL'.tr(),
                   style: Theme.of(context).textTheme.bodySmall,
                   textAlign: TextAlign.center,
                 ),
@@ -586,7 +618,8 @@ class _SocialMediaImageDialogState extends State<SocialMediaImageDialog> {
             ),
             SizedBox(height: 16),
             Text(
-              'Get image from ${widget.socialMedia}',
+              'profile.profileImage.getImageFrom'
+                  .tr(args: [widget.socialMedia]),
               style: Theme.of(context).textTheme.headlineSmall,
               textAlign: TextAlign.center,
             ),
@@ -597,8 +630,8 @@ class _SocialMediaImageDialogState extends State<SocialMediaImageDialog> {
                 controller: _textController,
                 decoration: InputDecoration(
                   labelText: widget.image.isNotEmpty
-                      ? 'Account or Username'
-                      : 'URL of the image',
+                      ? 'profile.profileImage.accountOrUsername'.tr()
+                      : 'profile.profileImage.imageUrl'.tr(),
                   floatingLabelStyle: WidgetStateTextStyle.resolveWith(
                     (Set<WidgetState> states) {
                       if (states.contains(WidgetState.focused)) {
@@ -661,7 +694,7 @@ class _SocialMediaImageDialogState extends State<SocialMediaImageDialog> {
                       ),
                     )
                   : Text(
-                      'Use this image',
+                      'profile.profileImage.useThis'.tr(),
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.white,

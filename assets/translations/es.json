@@ -47,6 +47,16 @@
       "email": "Correo Electrónico",
       "url": "URL",
       "notes": "Notas"
+    },
+    "profileImage": {
+      "select": "Select Profile Image",
+      "notFound": "Profile image not found in the link or social media",
+      "anyURL": "We use images over the internet, so any URL would work.",
+      "network": "Network URL",
+      "getImageFrom": "Get image from {}",
+      "accountOrUsername": "Account or Username",
+      "imageUrl": "URL of the image",
+      "useThis": "Use this image"
     }
   }
 }

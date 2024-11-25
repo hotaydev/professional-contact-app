@@ -47,6 +47,16 @@
       "email": "E-mail",
       "url": "URL / Link",
       "notes": "Notas"
+    },
+    "profileImage": {
+      "select": "Selecionar imagem de perfil",
+      "notFound": "Imagem de perfil não encontrada no link ou nas redes sociais",
+      "anyURL": "Usamos imagens da internet, então qualquer URL vai funcionar.",
+      "network": "URL da internet",
+      "getImageFrom": "Obter imagem - {}",
+      "accountOrUsername": "Conta ou Nome de Usuário",
+      "imageUrl": "URL da imagem",
+      "useThis": "Usar esta imagem"
     }
   }
 }

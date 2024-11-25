@@ -46,7 +46,33 @@ class _ChooseDataTransferState extends State<ChooseDataTransfer> {
                     ? QrCodeDataTransferOnline(vCard: widget.vCard)
                     : QrCodeDataTransfer(vCard: widget.vCard),
               ),
-              SizedBox(height: 50),
+              SizedBox(height: 25),
+              usingOnlineVersion
+                  ? Badge(
+                      label: Text(
+                        'dataSwitcher.adviceNeedInternet'.tr(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      backgroundColor: Colors.blue.shade500.withOpacity(0.4),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    )
+                  : Badge(
+                      label: Text(
+                        'dataSwitcher.noInternetNeeded'.tr(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      backgroundColor: Colors.blue.shade500.withOpacity(0.4),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    ),
+              SizedBox(height: 25),
               TextButton(
                 onPressed: () {
                   _toggleTransferType();
@@ -73,31 +99,6 @@ class _ChooseDataTransferState extends State<ChooseDataTransfer> {
                   ],
                 ),
               ),
-              usingOnlineVersion
-                  ? Badge(
-                      label: Text(
-                        'dataSwitcher.adviceNeedInternet'.tr(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      backgroundColor: Colors.blue.shade500.withOpacity(0.4),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                    )
-                  : Badge(
-                      label: Text(
-                        'dataSwitcher.noInternetNeeded'.tr(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      backgroundColor: Colors.blue.shade500.withOpacity(0.4),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                    ),
             ],
           )
         : Center(
